@@ -153,7 +153,9 @@ CREATE TABLE `Device` (
 --
 
 INSERT INTO `Device` (`Manufacturer`, `DeviceName`, `Type`, `AccessTime`) VALUES
-('Nest Labs', 'Nest Thermostat', 'Home Component', '00:00-24:00');
+('Nest Labs', 'Nest Thermostat', 'Home Component', '00:00-24:00'),
+('Apple', 'iPhone', 'Cell Phone', '00:00-24:00'),
+('Apple', 'Apple Watch', 'Smartwatch', '00:00-24:00');
 
 --
 -- Table structure for table `Device2`
@@ -172,7 +174,13 @@ CREATE TABLE `Device2` (
 --
 
 INSERT INTO `Device2` (`Manufacturer`, `DeviceName`, `Functionality`) Values
-('Nest Labs', 'Nest Thermostat', 'Thermostat');
+('Nest Labs', 'Nest Thermostat', 'Thermostat'),
+('Apple', 'iPhone', 'Phone'),
+('Apple', 'iPhone', 'Camera'),
+('Apple', 'iPhone', 'Internet Access'),
+('Apple', 'Apple Watch', 'Watch'),
+('Apple', 'Apple Watch', 'Activity Tracker'),
+('Apple', 'Apple Watch', 'Internet Access');
 
 --
 -- Table structure for table `Device3`
@@ -190,7 +198,14 @@ CREATE TABLE `Device3` (
 --
 
 INSERT INTO `Device3` (`Manufacturer`, `DeviceName`, `SerialNumber`) VALUES
-('Nest Labs', 'Nest Thermostat', '6372829474838');
+('Nest Labs', 'Nest Thermostat', '6372829474838'),
+('Apple', 'iPhone', 'A483929-99'),
+('Apple', 'iPhone', 'A838929-88'),
+('Apple', 'iPhone', 'A293848-89')
+('Apple', 'Apple Watch', 'A594448-77'),
+('Apple', 'Apple Watch', 'A790384-78'),
+('Apple', 'Apple Watch', 'A274628-33'),
+('Apple', 'Apple Watch', 'A637274-22');
 
 --
 -- Table structure for table `HasAccessTo`
@@ -205,6 +220,42 @@ CREATE TABLE `HasAccessTo` (
   FOREIGN KEY (`UserSSN`) REFERENCES `Users` (`SSN`),
   FOREIGN KEY (`Manufacturer`, `DeviceName`, `SerialNumber`) REFERENCES `Device3` (`Manufacturer`, `DeviceName`, `SerialNumber`)
 );
+
+--
+-- Inserting HasAccessTo data
+--
+
+INSERT INTO `HasAccessTo` (`UserSSN`, `Manufacturer`, `DeviceName`, `SerialNumber`) VALUES
+('123-45-6789', 'Nest Labs', 'Nest Thermostat', '6372829474838'),
+('333-44-5555', 'Nest Labs', 'Nest Thermostat', '6372829474838'),
+('369-66-0605', 'Nest Labs', 'Nest Thermostat', '6372829474838'),
+('846-76-7711', 'Apple', 'iPhone', 'A483929-99'),
+('191-73-8121', 'Apple', 'iPhone', 'A838929-88'),
+('987-65-4321', 'Apple', 'iPhone', 'A293848-89');
+
+--
+-- Table structure for table `Owns`
+--
+
+CREATE TABLE `Owns` (
+  `UserSSN` varchar(11),
+  `Manufacturer` varchar(20),
+  `DeviceName` varchar(20),
+  `SerialNumber` varchar(30),
+  PRIMARY KEY (`UserSSN`, `Manufacturer`, `SerialNumber`),
+  FOREIGN KEY (`UserSSN`) REFERENCES `Users` (`SSN`),
+  FOREIGN KEY (`Manufacturer`, `DeviceName`, `SerialNumber`) REFERENCES `Device3` (`Manufacturer`, `DeviceName`, `SerialNumber`)
+);
+
+--
+-- Inserting Owns data
+--
+
+INSERT INTO `Owns` (`UserSSN`, `Manufacturer`, `DeviceName`, `SerialNumber`) VALUES
+('123-45-6789', 'Nest Labs', 'Nest Thermostat', '6372829474838'),
+('666-88-4444', 'Apple', 'iPhone', 'A483929-99'),
+('191-73-8121', 'Apple', 'iPhone', 'A838929-88'),
+('987-65-4321', 'Apple', 'iPhone', 'A293848-89');
 
 --
 -- Table structure for table `Provider`
@@ -249,20 +300,6 @@ CREATE TABLE `Offers` (
   PRIMARY KEY (`ProviderName`, `Manufacturer`, `DeviceName`),
   FOREIGN KEY (`ProviderName`) REFERENCES `Provider` (`ProviderName`),
   FOREIGN KEY (`Manufacturer`, `DeviceName`) REFERENCES `Device` (`Manufacturer`, `DeviceName`)
-);
-
---
--- Table structure for table `Owns`
---
-
-CREATE TABLE `Owns` (
-  `UserSSN` varchar(11),
-  `Manufacturer` varchar(20),
-  `DeviceName` varchar(20),
-  `SerialNumber` varchar(30),
-  PRIMARY KEY (`UserSSN`, `Manufacturer`, `SerialNumber`),
-  FOREIGN KEY (`UserSSN`) REFERENCES `Users` (`SSN`),
-  FOREIGN KEY (`Manufacturer`, `DeviceName`, `SerialNumber`) REFERENCES `Device3` (`Manufacturer`, `DeviceName`, `SerialNumber`)
 );
 
 --
