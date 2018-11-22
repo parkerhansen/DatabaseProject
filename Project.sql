@@ -154,8 +154,12 @@ CREATE TABLE `Device` (
 
 INSERT INTO `Device` (`Manufacturer`, `DeviceName`, `Type`, `AccessTime`) VALUES
 ('Nest Labs', 'Nest Thermostat', 'Home Component', '00:00-24:00'),
-('Apple', 'iPhone', 'Cell Phone', '00:00-24:00'),
-('Apple', 'Apple Watch', 'Smartwatch', '00:00-24:00');
+('Apple', 'iPhone', 'Smartphone', '00:00-24:00'),
+('Apple', 'Apple Watch', 'Smartwatch', '00:00-24:00'),
+('Samsung', 'Galaxy Note', 'Smartphone', '00:00-24:00'),
+('LG', 'InstaView', 'Refrigerator', '00:00-24:00'),
+('Apple', 'MacBook', 'Laptop', '00:00-24:00'),
+('Nokia', '7.1', 'Smartphone', '00:00-24:00');
 
 --
 -- Table structure for table `Device2`
@@ -175,12 +179,24 @@ CREATE TABLE `Device2` (
 
 INSERT INTO `Device2` (`Manufacturer`, `DeviceName`, `Functionality`) Values
 ('Nest Labs', 'Nest Thermostat', 'Thermostat'),
+('Nest Labs', 'Nest Thermostat', 'Internet Access'),
 ('Apple', 'iPhone', 'Phone'),
 ('Apple', 'iPhone', 'Camera'),
 ('Apple', 'iPhone', 'Internet Access'),
 ('Apple', 'Apple Watch', 'Watch'),
 ('Apple', 'Apple Watch', 'Activity Tracker'),
-('Apple', 'Apple Watch', 'Internet Access');
+('Apple', 'Apple Watch', 'Internet Access'),
+('Samsung', 'Galaxy Note', 'Phone'),
+('Samsung', 'Galaxy Note', 'Camera'),
+('Samsung', 'Galaxy Note', 'Internet Access'),
+('LG', 'InstaView', 'Internet Access'),
+('LG', 'InstaView', 'Refrigerator'),
+('Apple', 'MacBook', 'Computer'),
+('Apple', 'MacBook', 'Internet Access'),
+('Apple', 'MacBook', 'Camera'),
+('Nokia', '7.1', 'Phone'),
+('Nokia', '7.1', 'Camera'),
+('Nokia', '7.1', 'Internet Access');
 
 --
 -- Table structure for table `Device3`
@@ -203,36 +219,29 @@ INSERT INTO `Device3` (`Manufacturer`, `DeviceName`, `SerialNumber`) VALUES
 ('Apple', 'iPhone', 'A483929-99'),
 ('Apple', 'iPhone', 'A838929-88'),
 ('Apple', 'iPhone', 'A293848-89'),
+('Apple', 'iPhone', 'A738294-77'),
+('Apple', 'iPhone', 'A883211-11'),
+('Apple', 'iPhone', 'A229348-93'),
+('Apple', 'iPhone', 'A488920-22'),
+('Apple', 'iPhone', 'A283844-88'),
 ('Apple', 'Apple Watch', 'A594448-77'),
 ('Apple', 'Apple Watch', 'A790384-78'),
-('Apple', 'Apple Watch', 'A274628-33'),
-('Apple', 'Apple Watch', 'A637274-22');
-
---
--- Table structure for table `HasAccessTo`
---
-
-CREATE TABLE `HasAccessTo` (
-  `UserSSN` varchar(11),
-  `Manufacturer` varchar(20),
-  `DeviceName` varchar (20),
-  `SerialNumber` varchar(30),
-  PRIMARY KEY (`UserSSN`, `Manufacturer`, `DeviceName`, `SerialNumber`),
-  FOREIGN KEY (`UserSSN`) REFERENCES `Users` (`SSN`),
-  FOREIGN KEY (`Manufacturer`, `DeviceName`, `SerialNumber`) REFERENCES `Device3` (`Manufacturer`, `DeviceName`, `SerialNumber`)
-);
-
---
--- Inserting HasAccessTo data
---
-
-INSERT INTO `HasAccessTo` (`UserSSN`, `Manufacturer`, `DeviceName`, `SerialNumber`) VALUES
-('123-45-6789', 'Nest Labs', 'Nest Thermostat', '6372829474838'),
-('333-44-5555', 'Nest Labs', 'Nest Thermostat', '6372829474838'),
-('369-66-0605', 'Nest Labs', 'Nest Thermostat', '6372829474838'),
-('846-76-7711', 'Apple', 'iPhone', 'A483929-99'),
-('191-73-8121', 'Apple', 'iPhone', 'A838929-88'),
-('987-65-4321', 'Apple', 'iPhone', 'A293848-89');
+('Apple', 'Apple Watch', 'A637274-22'),
+('Samsung', 'Galaxy Note', 'SM-74929'),
+('Samsung', 'Galaxy Note', 'SM-93920'),
+('Samsung', 'Galaxy Note', 'SM-49389'),
+('Samsung', 'Galaxy Note', 'SM-77282'),
+('Samsung', 'Galaxy Note', 'SM-28229'),
+('Samsung', 'Galaxy Note', 'SM-28803'),
+('LG', 'InstaView', '52729LG'),
+('LG', 'InstaView', '72903LG'),
+('Apple', 'MacBook', 'A239292-B5'),
+('Apple', 'MacBook', 'A638822-U5'),
+('Apple', 'MacBook', 'A820184-E3'),
+('Apple', 'MacBook', 'A662791-E7'),
+('Nokia', '7.1', '435-N020'),
+('Nokia', '7.1', '828-N922'),
+('Nokia', '7.1', '119-N455');
 
 --
 -- Table structure for table `Owns`
@@ -245,7 +254,8 @@ CREATE TABLE `Owns` (
   `SerialNumber` varchar(30),
   PRIMARY KEY (`UserSSN`, `Manufacturer`, `SerialNumber`),
   FOREIGN KEY (`UserSSN`) REFERENCES `Users` (`SSN`),
-  FOREIGN KEY (`Manufacturer`, `DeviceName`, `SerialNumber`) REFERENCES `Device3` (`Manufacturer`, `DeviceName`, `SerialNumber`)
+  FOREIGN KEY (`Manufacturer`, `DeviceName`, `SerialNumber`) REFERENCES `Device3` (`Manufacturer`, `DeviceName`, `SerialNumber`),
+  UNIQUE (`Manufacturer`, `SerialNumber`)
 );
 
 --
@@ -256,7 +266,148 @@ INSERT INTO `Owns` (`UserSSN`, `Manufacturer`, `DeviceName`, `SerialNumber`) VAL
 ('123-45-6789', 'Nest Labs', 'Nest Thermostat', '6372829474838'),
 ('666-88-4444', 'Apple', 'iPhone', 'A483929-99'),
 ('191-73-8121', 'Apple', 'iPhone', 'A838929-88'),
-('987-65-4321', 'Apple', 'iPhone', 'A293848-89');
+('987-65-4321', 'Apple', 'iPhone', 'A293848-89'),
+('230-09-2339', 'Apple', 'iPhone', 'A738294-77'),
+('123-45-6789', 'Apple', 'iPhone', 'A883211-11'),
+('453-45-3453', 'Apple', 'iPhone', 'A229348-93'),
+('453-45-3453', 'Apple', 'iPhone', 'A488920-22'),
+('480-68-1388', 'Apple', 'iPhone', 'A283844-88'),
+('666-88-4444', 'Apple', 'Apple Watch', 'A594448-77'),
+('191-73-8121', 'Apple', 'Apple Watch', 'A790384-78'),
+('987-65-4321', 'Apple', 'Apple Watch', 'A637274-22'),
+('182-29-3088', 'Samsung', 'Galaxy Note', 'SM-74929'),
+('524-84-9872', 'Samsung', 'Galaxy Note', 'SM-93920'),
+('203-91-2929', 'Samsung', 'Galaxy Note', 'SM-49389'),
+('123-45-6789', 'Samsung', 'Galaxy Note', 'SM-77282'),
+('123-45-6789', 'Samsung', 'Galaxy Note', 'SM-28229'),
+('562-79-9262', 'Samsung', 'Galaxy Note', 'SM-28803'),
+('123-45-6789', 'LG', 'InstaView', '52729LG'),
+('480-68-1388', 'LG', 'InstaView', '72903LG'),
+('888-66-5555', 'Apple', 'MacBook', 'A239292-B5'),
+('453-45-3453', 'Apple', 'MacBook', 'A638822-U5'),
+('562-79-9262', 'Apple', 'MacBook', 'A820184-E3'),
+('865-06-9004', 'Nokia', '7.1', '435-N020'),
+('987-98-7987', 'Nokia', '7.1', '828-N922'),
+('999-88-7777', 'Nokia', '7.1', '119-N455');
+
+--
+-- Table structure for table `HasAccessTo`
+--
+
+CREATE TABLE `HasAccessTo` (
+  `UserSSN` varchar(11),
+  `Manufacturer` varchar(20),
+  `DeviceName` varchar (20),
+  `SerialNumber` varchar(30),
+  PRIMARY KEY (`UserSSN`, `Manufacturer`, `DeviceName`, `SerialNumber`),
+  FOREIGN KEY (`UserSSN`) REFERENCES `Users` (`SSN`),
+  FOREIGN KEY (`Manufacturer`, `DeviceName`, `SerialNumber`) REFERENCES `Owns` (`Manufacturer`, `DeviceName`, `SerialNumber`)
+);
+
+--
+-- Inserting HasAccessTo data
+--
+
+INSERT INTO `HasAccessTo` (`UserSSN`, `Manufacturer`, `DeviceName`, `SerialNumber`) VALUES
+('123-45-6789', 'Nest Labs', 'Nest Thermostat', '6372829474838'),
+('333-44-5555', 'Nest Labs', 'Nest Thermostat', '6372829474838'),
+('369-66-0605', 'Nest Labs', 'Nest Thermostat', '6372829474838'),
+('846-76-7711', 'Apple', 'iPhone', 'A483929-99'),
+('666-88-4444', 'Apple', 'iPhone', 'A483929-99'),
+('191-73-8121', 'Apple', 'iPhone', 'A838929-88'),
+('987-65-4321', 'Apple', 'iPhone', 'A293848-89'),
+('230-09-2339', 'Apple', 'iPhone', 'A738294-77'),
+('369-66-0605', 'Apple', 'iPhone', 'A883211-11'),
+('453-45-3453', 'Apple', 'iPhone', 'A229348-93'),
+('888-66-5555', 'Apple', 'iPhone', 'A488920-22'),
+('480-68-1388', 'Apple', 'iPhone', 'A283844-88'),
+('846-76-7711', 'Apple', 'Apple Watch', 'A594448-77'),
+('191-73-8121', 'Apple', 'Apple Watch', 'A790384-78'),
+('987-65-4321', 'Apple', 'Apple Watch', 'A637274-22'),
+('182-29-3088', 'Samsung', 'Galaxy Note', 'SM-74929'),
+('524-84-9872', 'Samsung', 'Galaxy Note', 'SM-93920'),
+('203-91-2929', 'Samsung', 'Galaxy Note', 'SM-49389'),
+('123-45-6789', 'Samsung', 'Galaxy Note', 'SM-77282'),
+('333-44-5555', 'Samsung', 'Galaxy Note', 'SM-28229'),
+('562-79-9262', 'Samsung', 'Galaxy Note', 'SM-28803'),
+('123-45-6789', 'LG', 'InstaView', '52729LG'),
+('333-44-5555', 'LG', 'InstaView', '52729LG'),
+('369-66-0605', 'LG', 'InstaView', '52729LG'),
+('480-68-1388', 'LG', 'InstaView', '72903LG'),
+('888-66-5555', 'Apple', 'MacBook', 'A239292-B5'),
+('453-45-3453', 'Apple', 'MacBook', 'A638822-U5'),
+('888-66-5555', 'Apple', 'MacBook', 'A638822-U5'),
+('562-79-9262', 'Apple', 'MacBook', 'A820184-E3'),
+('865-06-9004', 'Nokia', '7.1', '435-N020'),
+('987-98-7987', 'Nokia', '7.1', '828-N922'),
+('999-88-7777', 'Nokia', '7.1', '119-N455');
+
+--
+-- Table structure for table `Regions`
+--
+
+CREATE TABLE `Regions` (
+  `RegionName` varchar(20),
+  `State` char(2),
+  PRIMARY KEY (`RegionName`, `State`)
+);
+
+--
+-- Inserting Regions Data
+--
+
+INSERT INTO `Regions` (`RegionName`, `State`) VALUES
+('New England', 'CT'),
+('New England', 'ME'),
+('New England', 'MA'),
+('New England', 'NH'),
+('New England', 'RI'),
+('New England', 'VT'),
+('Mid-Atlantic', 'NJ'),
+('Mid-Atlantic', 'NY'),
+('Mid-Atlantic', 'PA'),
+('East Midwest', 'IL'),
+('East Midwest', 'IN'),
+('East Midwest', 'MI'),
+('East Midwest', 'OH'),
+('East Midwest', 'WI'),
+('West Midwest', 'IA'),
+('West Midwest', 'KS'),
+('West Midwest', 'MN'),
+('West Midwest', 'MO'),
+('West Midwest', 'NE'),
+('West Midwest', 'ND'),
+('West Midwest', 'SD'),
+('South Atlantic', 'DE'),
+('South Atlantic', 'FL'),
+('South Atlantic', 'GA'),
+('South Atlantic', 'MD'),
+('South Atlantic', 'NC'),
+('South Atlantic', 'SC'),
+('South Atlantic', 'VA'),
+('South Atlantic', 'DC'),
+('South Atlantic', 'WV'),
+('East South', 'AL'),
+('East South', 'KY'),
+('East South', 'MS'),
+('East South', 'TN'),
+('West South', 'AR'),
+('West South', 'LA'),
+('West South', 'OK'),
+('West South', 'TX'),
+('Mountain', 'AZ'),
+('Mountain', 'CO'),
+('Mountain', 'ID'),
+('Mountain', 'MT'),
+('Mountain', 'NV'),
+('Mountain', 'NM'),
+('Mountain', 'UT'),
+('Mountain', 'WY'),
+('Pacific', 'CA'),
+('Pacific', 'OR'),
+('Pacific', 'WA'),
+('Non Continental', 'AK'),
+('Non Continental', 'HI');
 
 --
 -- Table structure for table `Provider`
@@ -269,6 +420,16 @@ CREATE TABLE `Provider` (
 );
 
 --
+-- Inserting Provider Data
+--
+
+INSERT INTO `Provider` (`ProviderName`, `PhoneNumber`) VALUES
+('AT&T', '8003310500'),
+('Verizon', '8009220204'),
+('T-Mobile', '8008662453'),
+('Sprint', '8882114727');
+
+--
 -- Table structure for table `Provider2`
 --
 
@@ -276,8 +437,44 @@ CREATE TABLE `Provider2` (
   `ProviderName` varchar(20),
   `RegionServed` varchar(20),
   PRIMARY KEY (`ProviderName`, `RegionServed`),
-  FOREIGN KEY (`ProviderName`) REFERENCES `Provider` (`ProviderName`)
+  FOREIGN KEY (`ProviderName`) REFERENCES `Provider` (`ProviderName`),
+  FOREIGN KEY (`RegionServed`) REFERENCES `Regions` (`RegionName`)
 );
+
+--
+-- Inserting Provider2 Data
+--
+
+INSERT INTO `Provider2` (`ProviderName`, `RegionServed`) VALUES
+('AT&T', 'New England'),
+('AT&T', 'Mid-Atlantic'),
+('AT&T', 'East Midwest'),
+('AT&T', 'West Midwest'),
+('AT&T', 'South Atlantic'),
+('AT&T', 'East South'),
+('AT&T', 'West South'),
+('AT&T', 'Mountain'),
+('AT&T', 'Pacific'),
+('AT&T', 'Non Continental'),
+('Verizon', 'New England'),
+('Verizon', 'Mid-Atlantic'),
+('Verizon', 'East Midwest'),
+('Verizon', 'West Midwest'),
+('Verizon', 'South Atlantic'),
+('Verizon', 'East South'),
+('Verizon', 'West South'),
+('Verizon', 'Pacific'),
+('Verizon', 'Non Continental'),
+('T-Mobile', 'New England'),
+('T-Mobile', 'Mid-Atlantic'),
+('T-Mobile', 'East Midwest'),
+('T-Mobile', 'South Atlantic'),
+('T-Mobile', 'West South'),
+('T-Mobile', 'Pacific'),
+('Sprint', 'New England'),
+('Sprint', 'Mid-Atlantic'),
+('Sprint', 'South Atlantic'),
+('Sprint', 'Pacific');
 
 --
 -- Table structure for table `Provider3`
@@ -289,6 +486,22 @@ CREATE TABLE `Provider3` (
   PRIMARY KEY (`ProviderName`, `ServicesOffered`),
   FOREIGN KEY (`ProviderName`) REFERENCES `Provider` (`ProviderName`)
 );
+
+--
+-- Inserting Provider3 Data
+--
+
+INSERT INTO `Provider3` (`ProviderName`, `ServicesOffered`) VALUES
+('AT&T', 'Telephone'),
+('AT&T', 'Wired Internet'),
+('AT&T', 'Wireless Internet'),
+('AT&T', 'Television'),
+('Verizon', 'Telephone'),
+('Verizon', 'Wireless Internet'),
+('T-Mobile', 'Telephone'),
+('T-Mobile', 'Wireless Internet'),
+('Sprint', 'Telephone'),
+('Sprint', 'Wireless Internet');
 
 --
 -- Table structure for table `Offers`
