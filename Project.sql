@@ -184,6 +184,7 @@ INSERT INTO `Device2` (`Manufacturer`, `DeviceName`, `Functionality`) Values
 
 --
 -- Table structure for table `Device3`
+--
 
 CREATE TABLE `Device3` (
   `Manufacturer` varchar(20),
@@ -201,7 +202,7 @@ INSERT INTO `Device3` (`Manufacturer`, `DeviceName`, `SerialNumber`) VALUES
 ('Nest Labs', 'Nest Thermostat', '6372829474838'),
 ('Apple', 'iPhone', 'A483929-99'),
 ('Apple', 'iPhone', 'A838929-88'),
-('Apple', 'iPhone', 'A293848-89')
+('Apple', 'iPhone', 'A293848-89'),
 ('Apple', 'Apple Watch', 'A594448-77'),
 ('Apple', 'Apple Watch', 'A790384-78'),
 ('Apple', 'Apple Watch', 'A274628-33'),
