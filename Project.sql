@@ -215,7 +215,8 @@ CREATE TABLE `Device3` (
 --
 
 INSERT INTO `Device3` (`Manufacturer`, `DeviceName`, `SerialNumber`) VALUES
-('Nest Labs', 'Nest Thermostat', '6372829474838'),
+('Nest Labs', 'Nest Thermostat', 'N6372829474838'),
+('Nest Labs', 'Nest Thermostat', 'N2939474736655'),
 ('Apple', 'iPhone', 'A483929-99'),
 ('Apple', 'iPhone', 'A838929-88'),
 ('Apple', 'iPhone', 'A293848-89'),
@@ -263,7 +264,8 @@ CREATE TABLE `Owns` (
 --
 
 INSERT INTO `Owns` (`UserSSN`, `Manufacturer`, `DeviceName`, `SerialNumber`) VALUES
-('123-45-6789', 'Nest Labs', 'Nest Thermostat', '6372829474838'),
+('123-45-6789', 'Nest Labs', 'Nest Thermostat', 'N6372829474838'),
+('562-79-9262', 'Nest Labs', 'Nest Thermostat', 'N2939474736655'),
 ('666-88-4444', 'Apple', 'iPhone', 'A483929-99'),
 ('191-73-8121', 'Apple', 'iPhone', 'A838929-88'),
 ('987-65-4321', 'Apple', 'iPhone', 'A293848-89'),
@@ -286,6 +288,7 @@ INSERT INTO `Owns` (`UserSSN`, `Manufacturer`, `DeviceName`, `SerialNumber`) VAL
 ('888-66-5555', 'Apple', 'MacBook', 'A239292-B5'),
 ('453-45-3453', 'Apple', 'MacBook', 'A638822-U5'),
 ('562-79-9262', 'Apple', 'MacBook', 'A820184-E3'),
+('480-68-1388', 'Apple', 'MacBook', 'A662791-E7'),
 ('865-06-9004', 'Nokia', '7.1', '435-N020'),
 ('987-98-7987', 'Nokia', '7.1', '828-N922'),
 ('999-88-7777', 'Nokia', '7.1', '119-N455');
@@ -309,9 +312,10 @@ CREATE TABLE `HasAccessTo` (
 --
 
 INSERT INTO `HasAccessTo` (`UserSSN`, `Manufacturer`, `DeviceName`, `SerialNumber`) VALUES
-('123-45-6789', 'Nest Labs', 'Nest Thermostat', '6372829474838'),
-('333-44-5555', 'Nest Labs', 'Nest Thermostat', '6372829474838'),
-('369-66-0605', 'Nest Labs', 'Nest Thermostat', '6372829474838'),
+('123-45-6789', 'Nest Labs', 'Nest Thermostat', 'N6372829474838'),
+('333-44-5555', 'Nest Labs', 'Nest Thermostat', 'N6372829474838'),
+('369-66-0605', 'Nest Labs', 'Nest Thermostat', 'N6372829474838'),
+('562-79-9262', 'Nest Labs', 'Nest Thermostat', 'N2939474736655'),
 ('846-76-7711', 'Apple', 'iPhone', 'A483929-99'),
 ('666-88-4444', 'Apple', 'iPhone', 'A483929-99'),
 ('191-73-8121', 'Apple', 'iPhone', 'A838929-88'),
@@ -338,6 +342,7 @@ INSERT INTO `HasAccessTo` (`UserSSN`, `Manufacturer`, `DeviceName`, `SerialNumbe
 ('453-45-3453', 'Apple', 'MacBook', 'A638822-U5'),
 ('888-66-5555', 'Apple', 'MacBook', 'A638822-U5'),
 ('562-79-9262', 'Apple', 'MacBook', 'A820184-E3'),
+('480-68-1388', 'Apple', 'MacBook', 'A662791-E7'),
 ('865-06-9004', 'Nokia', '7.1', '435-N020'),
 ('987-98-7987', 'Nokia', '7.1', '828-N922'),
 ('999-88-7777', 'Nokia', '7.1', '119-N455');
@@ -492,15 +497,19 @@ CREATE TABLE `Provider3` (
 --
 
 INSERT INTO `Provider3` (`ProviderName`, `ServicesOffered`) VALUES
-('AT&T', 'Telephone'),
+('AT&T', 'Home Telephone'),
 ('AT&T', 'Wired Internet'),
 ('AT&T', 'Wireless Internet'),
-('AT&T', 'Television'),
-('Verizon', 'Telephone'),
-('Verizon', 'Wireless Internet'),
-('T-Mobile', 'Telephone'),
+('AT&T', 'Television - DIRECTV'),
+('AT&T', 'Television - U-verse'),
+('Verizon', 'Home Telephone'),
+('Verizon', 'Limited Wireless Internet'),
+('Verizon', 'Basic Unlimited Wireless Internet'),
+('Verizon', 'Beyond Unlimited Wireless Internet'),
+('Verizon', 'Television'),
+('T-Mobile', 'Home Telephone'),
 ('T-Mobile', 'Wireless Internet'),
-('Sprint', 'Telephone'),
+('Sprint', 'Home Telephone'),
 ('Sprint', 'Wireless Internet');
 
 --
@@ -517,37 +526,91 @@ CREATE TABLE `Offers` (
 );
 
 --
+-- Inserting Offers Data
+--
+
+INSERT INTO `Offers` (`ProviderName`, `Manufacturer`, `DeviceName`) VALUES
+('AT&T', 'Apple', 'iPhone'),
+('AT&T', 'Samsung', 'Galaxy Note'),
+('AT&T', 'Nokia', '7.1'),
+('Verizon', 'Apple', 'iPhone'),
+('Verizon', 'Samsung', 'Galaxy Note'),
+('Verizon', 'Nokia', '7.1'),
+('T-Mobile', 'Apple', 'iPhone'),
+('T-Mobile', 'Samsung', 'Galaxy Note'),
+('Sprint', 'Apple', 'iPhone');
+
+--
 -- Table structure for table `Package`
 --
 
 CREATE TABLE `Package` (
-  `PackageName` varchar(20) NOT NULL,
-  `ProviderName` varchar(20) NOT NULL,
-  `PolicyPeriod` varchar(21) NOT NULL,
+  `PackageName` varchar(20),
+  `ProviderName` varchar(20),
   PRIMARY KEY (`PackageName`, `ProviderName`),
   FOREIGN KEY (`ProviderName`) REFERENCES `Provider` (`ProviderName`)
 );
+
+--
+-- Inserting Package Data
+--
+
+INSERT INTO `Package` (`PackageName`, `ProviderName`) VALUES
+('Basic', 'AT&T'),
+('DIRECTV + Internet', 'AT&T'),
+('DIRECTV + Wireless', 'AT&T'),
+('U-verse TV + Internet', 'AT&T'),
+('TV + Internet + Phone', 'AT&T'),
+('Basic', 'Verizon'),
+('Unlimited', 'Verizon'),
+('Unlimited+', 'Verizon'),
+('Complete', 'Verizon'),
+('Complete+', 'Verizon');
 
 --
 -- Table structure for table `Package2`
 --
 
 CREATE TABLE `Package2` (
-  `PackageName` varchar(20) NOT NULL,
-  `ProviderName` varchar(20) NOT NULL,
-  `Service` varchar(20) NOT NULL,
+  `PackageName` varchar(20),
+  `ProviderName` varchar(20),
+  `Service` varchar(20),
   PRIMARY KEY (`PackageName`, `ProviderName`, `Service`),
-  FOREIGN KEY (`ProviderName`) REFERENCES `Provider` (`ProviderName`),
-  FOREIGN KEY (`PackageName`) REFERENCES `Package` (`PackageName`)
+  FOREIGN KEY (`PackageName`) REFERENCES `Package` (`PackageName`),
+  FOREIGN KEY (`ProviderName`, `Service`) REFERENCES `Provider3` (`ProviderName`, `ServicesOffered`)
 );
+
+--
+-- Inserting Package2 data
+--
+
+INSERT INTO `Package2` (`PackageName`, `ProviderName`, `Service`) VALUES
+('Basic', 'AT&T', 'Wireless Internet'),
+('DIRECTV + Internet', 'AT&T', 'Television - DIRECTV'),
+('DIRECTV + Internet', 'AT&T', 'Wired Internet'),
+('DIRECTV + Wireless', 'AT&T', 'Television - DIRECTV'),
+('DIRECTV + Wireless', 'AT&T', 'Wireless Internet'),
+('U-verse TV + Internet', 'AT&T', 'Television - U-verse'),
+('U-verse TV + Internet', 'AT&T', 'Wired Internet'),
+('TV + Internet + Phone', 'AT&T', 'Television - U-verse'),
+('TV + Internet + Phone', 'AT&T', 'Wired Internet'),
+('TV + Internet + Phone', 'AT&T', 'Wireless Internet'),
+('Basic', 'Verizon', 'Limited Wireless Internet'),
+('Unlimited', 'Verizon', 'Basic Unlimited Wireless Internet'),
+('Unlimited+', 'Verizon', 'Beyond Unlimited Wireless Internet'),
+('Complete', 'Verizon', 'Limited Wireless Internet'),
+('Complete', 'Verizon', 'Television'),
+('Complete+', 'Verizon', 'Basic Unlimited Wireless Internet'),
+('Complete+', 'Verizon', 'Television');
 
 --
 -- Table structure for table `Purchases`
 --
 
 CREATE TABLE `Purchases` (
-  `UserSSN` varchar(11) NOT NULL,
-  `PackageName` varchar(20) NOT NULL,
+  `UserSSN` varchar(11),
+  `PackageName` varchar(20),
+  `PolicyPeriod` varchar(21) NOT NULL,
   PRIMARY KEY (`UserSSN`, `PackageName`),
   FOREIGN KEY (`UserSSN`) REFERENCES `AuthorizedUser` (`SSN`),
   FOREIGN KEY (`PackageName`) REFERENCES `Package` (`PackageName`)
