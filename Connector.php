@@ -10,24 +10,7 @@ if (!$conn) {
     exit;
 }
 
-//echo "Success: A proper connection to MySQL was made!" . PHP_EOL;
-//echo "Host information: " . mysqli_get_host_info($conn) . PHP_EOL;
-
-mysqli_select_db($conn, "Project");
-
-$sql="INSERT INTO `Provider` (`ProviderName`, `PhoneNumber`) VALUES
-('$_POST[ProviderName]','$_POST[PhoneNumber]')";
-
-if (mysqli_query($conn, $sql)) {
-      echo "New record created successfully";
-} else {
-      echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-}
-mysqli_close($conn);
-
 ?>
-
-<a href="http://localhost/ProjectHTML.php">Back</a>
 
 </body>
 </html>
