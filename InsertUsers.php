@@ -76,7 +76,7 @@ while (!empty($_POST["SSN"]))
 <br>
 <br>
 
-<a href="http://localhost/ProjectHTML.php">Back</a>
+<a href="http://localhost/ProjectHTML.html">Back</a>
 
 
 </body>
