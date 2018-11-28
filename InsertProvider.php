@@ -42,7 +42,7 @@ else {
 <br>
 <br>
 
-<a href="http://localhost/ProjectHTML.php">Back</a>
+<a href="http://localhost/ProjectHTML.html">Back</a>
 
 
 </body>
