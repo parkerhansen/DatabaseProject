@@ -10,7 +10,7 @@ if(isset($_POST['search']))
 
 }
  else {
-    $query = "SELECT * FROM `Device2`;
+    $query = "SELECT * FROM `Device2`";
     $search_result = filterTable($query);
 }
 
