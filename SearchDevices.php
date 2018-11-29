@@ -52,7 +52,7 @@ function filterTable($query)
   <h2><center><a href="http://localhost/ProjectHTML.html">Back</a></center><h2>
 
 
-  <form action="SearchDevices.php" method="post">
+  <center><form action="SearchDevices.php" method="post">
     <select type="text" name="valueToSearch">
       <option value="">ALL</option>
       <option value="Thermostat">Thermostat</option>
@@ -65,7 +65,7 @@ function filterTable($query)
       <option value="Computer">Computer</option>
     <input type="submit" name="search" value="Filter"><br><br>
 
-    <table>
+    <center><table>
       <tr>
         <th>Manufacturer</th>
         <th>Device Name</th>
@@ -81,7 +81,7 @@ function filterTable($query)
       </tr>
 <?php endwhile;?>
     </table>
-  </form>
+  </form><center>
 
 </body>
 </html>
