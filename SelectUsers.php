@@ -49,10 +49,11 @@ function filterTable($query)
   <h1><center>A DATABASE FOR YOUR INTERNET OF THINGS:</center></h1>
   <center><img src="http://localhost/ElitaDrawing.jpeg" /></center>
   <h2><center>HELPING YOU SEE BOTH THE FOREST AND THE TREES</center></h2>
+  <h2><center><a href="http://localhost/ProjectHTML.html">Back</a></center><h2>
 
 
   <form action="SelectUsers.php" method="post">
-    <input type="text" name="valueToSearch" placeholder="Value To Search"><br><br>
+    <input type="text" name="valueToSearch" placeholder="Click Filter to show all"><br><br>
     <input type="submit" name="search" value="Filter"><br><br>
 
     <table>
@@ -69,7 +70,7 @@ function filterTable($query)
       </tr>
 
       <!-- populate table from mysql database -->
-<?php while($row = mysqli_fetch_array($search_result)):?>
+<?php if(isset($_POST['search'])) while($row = mysqli_fetch_array($search_result)):?>
       <tr>
         <td><?php echo $row['Fname'];?></td>
         <td><?php echo $row['Minit'];?></td>
@@ -85,7 +86,5 @@ function filterTable($query)
     </table>
   </form>
 
-
-<a href="http://localhost/ProjectHTML.html">Back</a>
 </body>
 </html>
