@@ -73,7 +73,7 @@ function filterTable($query)
       </tr>
 
       <!-- populate table from mysql database -->
-<?php while($row = mysqli_fetch_array($search_result)):?>
+<?php if(isset($_POST['search'])) while($row = mysqli_fetch_array($search_result)):?>
       <tr>
         <td><?php echo $row['Manufacturer'];?></td>
         <td><?php echo $row['DeviceName'];?></td>
