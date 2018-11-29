@@ -52,11 +52,11 @@ function filterTable($query)
   <h2><center><a href="http://localhost/ProjectHTML.html">Back</a></center><h2>
 
 
-  <form action="SelectUsers.php" method="post">
-    <input type="text" name="valueToSearch" placeholder="Click Filter to show all"><br><br>
-    <input type="submit" name="search" value="Filter"><br><br>
+  <center><form action="SelectUsers.php" method="post">
+    <input type="text" name="valueToSearch" placeholder="User First Name"><br><br>
+    <input type="submit" name="search" value="Filter"><br><br></center>
 
-    <table>
+    <center><table>
       <tr>
         <th>First Name</th>
         <th>Middle Initial</th>
@@ -67,7 +67,7 @@ function filterTable($query)
         <th>Address</th>
         <th>State</th>
         <th>Sex</th>
-      </tr>
+      </tr></center>
 
       <!-- populate table from mysql database -->
 <?php if(isset($_POST['search'])) while($row = mysqli_fetch_array($search_result)):?>
