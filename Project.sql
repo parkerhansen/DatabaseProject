@@ -8,7 +8,7 @@ CREATE TABLE `Users` (
     `Lname` varchar(20) NOT NULL,
     `SSN` varchar(11) NOT NULL,
     `PhoneNumber` varchar(10) NOT NULL,
-    `DateOfBirth` varchar(10) NOT NULL,
+    `DateOfBirth` date NOT NULL,
     `Address` varchar(50) NOT NULL,
     `State` varchar(2) NOT NULL,
     `Sex` varchar(1) NOT NULL,
@@ -103,7 +103,7 @@ CREATE TABLE `Data` (
   `Location` varchar(50),
   `Amount` float,
   `Time` varchar(5),
-  `Date` varchar(10),
+  `Date` date,
   PRIMARY KEY (`UserSSN`, `Location`, `Amount`, `Time`, `Date`),
   FOREIGN KEY (`UserSSN`) REFERENCES `Users` (`SSN`)
 );

@@ -1,6 +1,6 @@
 <?php
 
-if(isset($_POST['search']))
+if(isset($_POST['valueToSearch']))
 {
     $valueToSearch = $_POST['valueToSearch'];
     // search in all table columns
@@ -8,6 +8,16 @@ if(isset($_POST['search']))
    $search_result = filterTable($query);
 
 }
+
+else if(isset($_POST['beginning']) && isset($_POST['beginning']))
+{
+    $beginning = $_POST['beginning'];
+    $end = $_POST['end'];
+
+    $query = "SELECT * FROM `Users`, `Data` WHERE `SSN`=`UserSSN` AND `Date` BETWEEN '%".$beginning."%' AND '%".$end."%'";
+    $search_result = filterTable($query);
+}
+
  else {
     $query = "SELECT * FROM `Users`, `Data` WHERE `SSN`=`UserSSN`";
     $search_result = filterTable($query);
@@ -51,9 +61,12 @@ function filterTable($query)
   <h2><center><a href="http://localhost/ProjectHTML.html">Back</a></center><h2>
 
 
-  <center><form action="SearchAccessLogs.php" method="post">
-    <input type="text" name="valueToSearch" placeholder="SSN (XXX-XX-XXXX)">
-    <input type="submit" name="search" value="Filter"><br><br>
+  <center>
+    <form action="SearchAccessLogs.php" method="post">
+    <input type="text" name="valueToSearch" placeholder="SSN (XXX-XX-XXXX)"><br><br>
+    <input type="text" name="beginning" placeholder="Beginning">
+    <input type="text" name="end" placeholder="End"><br><br>
+    <input type="submit" name="search" value="Filter"><br><br></form>
 
     <center>
     <table>
@@ -65,16 +78,16 @@ function filterTable($query)
       </tr>
 
       <!-- populate table from mysql database -->
-<?php if(isset($_POST['search'])) while($row = mysqli_fetch_array($search_result)):?>
+<?php while($row = mysqli_fetch_array($search_result)):?>
       <tr>
-        <td><?php echo $row['Location'];?></td>
         <td><?php echo $row['Amount'];?></td>
+        <td><?php echo $row['Location'];?></td>
         <td><?php echo $row['Time'];?></td>
         <td><?php echo $row['Date'];?></td>
       </tr>
 <?php endwhile;?>
     </table>
-  </form><center>
+  <center>
 
 </body>
 </html>
