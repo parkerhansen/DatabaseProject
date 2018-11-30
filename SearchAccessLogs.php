@@ -4,13 +4,12 @@ if(isset($_POST['search']))
 {
     $valueToSearch = $_POST['valueToSearch'];
     // search in all table columns
-    // using concat mysql function
-    $query = "SELECT * FROM `Users` `Data` WHERE `SSN`=`UserSSN` (`SSN`) LIKE '%".$valueToSearch."%'";
+    $query = "SELECT * FROM `Users`, `Data` WHERE `SSN`=`UserSSN` AND (`SSN`) LIKE '%".$valueToSearch."%'";
    $search_result = filterTable($query);
 
 }
  else {
-    $query = "SELECT * FROM `Users` `Data` WHERE `SSN`=`UserSSN`";
+    $query = "SELECT * FROM `Users`, `Data` WHERE `SSN`=`UserSSN`";
     $search_result = filterTable($query);
 }
 
@@ -53,19 +52,11 @@ function filterTable($query)
 
 
   <center><form action="SearchAccessLogs.php" method="post">
-    <select type="text" name="valueToSearch" placeholder="User SSN">
-      <option value="">ALL</option>
-      <option value="Thermostat">Thermostat</option>
-      <option value="Internet Access">Internet Access</option>
-      <option value="Phone">Phone</option>
-      <option value="Camera">Camera</option>
-      <option value="Watch">Watch</option>
-      <option value="Activity Tracker">Activity Tracker</option>
-      <option value="Refrigerator">Refrigerator</option>
-      <option value="Computer">Computer</option>
+    <input type="text" name="valueToSearch" placeholder="SSN (XXX-XX-XXXX)">
     <input type="submit" name="search" value="Filter"><br><br>
 
-    <center><table>
+    <center>
+    <table>
       <tr>
         <th>Amount</th>
         <th>Location</th>
