@@ -1,20 +1,23 @@
 <?php
 
-if(($_POST['search']))
+if(isset($_POST['searchSSN']))
 {
-    $valueToSearch = $_POST['valueToSearch'];
-    $beginning = $_POST['beginning'];
-    $end = $_POST['end'];
-    // search in all table columns
-    if(is_null($valueToSearch)){
-      $query = "SELECT * FROM `Users`, `Data` WHERE `SSN`=`UserSSN` AND `Date` BETWEEN '%".$beginning."%' AND '%".$end."%'";
-    }
-    else $query = "SELECT * FROM `Users`, `Data` WHERE `SSN`=`UserSSN` AND `SSN` LIKE '%".$valueToSearch."%'";
-   $search_result = filterTable($query);
+  $ssn = $_POST['ssn'];
+  $query = "SELECT * FROM `Users`, `Data` WHERE `SSN`=`UserSSN` AND `SSN` LIKE '$ssn'";
+  $search_result = filterTable($query);
 
 }
 
- else {
+else if(isset($_POST['searchDate']))
+{
+  $beginning = $_POST['beginning'];
+  $end = $_POST['end'];
+  $query = "SELECT * FROM `Users`, `Data` WHERE `SSN`=`UserSSN` AND `Date` BETWEEN '$beginning' AND '$end'";
+  $search_result = filterTable($query);
+}
+
+else
+{
     $query = "SELECT * FROM `Users`, `Data` WHERE `SSN`=`UserSSN`";
     $search_result = filterTable($query);
 }
@@ -59,10 +62,19 @@ function filterTable($query)
 
   <center>
     <form action="SearchAccessLogs.php" method="post">
-    <input type="text" name="valueToSearch" placeholder="SSN (XXX-XX-XXXX)"><br><br>
-    <input type="text" name="beginning" placeholder="Beginning">
-    <input type="text" name="end" placeholder="End"><br><br>
-    <input type="submit" name="search" value="Search"><br><br></form>
+      <input type="text" name="ssn" placeholder="SSN (XXX-XX-XXXX)">
+      <input type="submit" name="searchSSN" value="Search"><br><br>
+    </form>
+
+    <form action="SearchAccessLogs.php" method="post">
+      <input type="text" name="beginning" placeholder="Beginning">
+      <input type="text" name="end" placeholder="End">
+      <input type="submit" name="searchDate" value="Search"><br><br>
+    </form>
+
+    <form>
+      <input type="button" value="Show All" onclick="window.location.href='SearchAccessLogs.php'" />
+    </form>
 
     <center>
     <table>
