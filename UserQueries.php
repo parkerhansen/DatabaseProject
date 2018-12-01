@@ -7,9 +7,16 @@ if(isset($_POST['search']))
     // using concat mysql function
     $query = "SELECT * FROM `Users` AS `U`, `HasAccessTo` AS `H`, `Device2` AS `D` WHERE `SSN`=`UserSSN` AND `D`.`Manufacturer`=`H`.`Manufacturer` AND `D`.`DeviceName`=`H`.`DeviceName` AND `D`.`DeviceName`='$valueToSearch'";
     $search_result = filterTable($query);
-
 }
- else {
+
+else if(isset($_POST['search2']))
+{
+    $functionalityToSearch = $_POST['functionalityToSearch'];
+    $query = "SELECT * FROM `Users` AS `U`, `HasAccessTo` AS `H`, `Device2` AS `D` WHERE `SSN`=`UserSSN` AND `D`.`Manufacturer`=`H`.`Manufacturer` AND `D`.`DeviceName`=`H`.`DeviceName` AND `D`.`Functionality`='$functionalityToSearch'";
+    $search_result = filterTable($query);
+}
+
+else {
     $query = "SELECT * FROM `Users` AS `U`, `HasAccessTo` AS `H`, `Device2` AS `D` WHERE `SSN`=`UserSSN` AND `D`.`Manufacturer`=`H`.`Manufacturer` AND `D`.`DeviceName`=`H`.`DeviceName`";
     $search_result = filterTable($query);
 }
@@ -53,8 +60,21 @@ function filterTable($query)
 
 
   <form action="UserQueries.php" method="post">
-    <input type="text" name="valueToSearch" placeholder="Device Name"><br><br>
+    <input type="text" name="valueToSearch" placeholder="Device Name">
     <input type="submit" name="search" value="Filter"><br><br>
+  </form>
+  <form action="UserQueries.php" method="post">
+  <select type="text" name="functionalityToSearch">
+    <option value="">ALL</option>
+    <option value="Thermostat">Thermostat</option>
+    <option value="Internet Access">Internet Access</option>
+    <option value="Phone">Phone</option>
+    <option value="Camera">Camera</option>
+    <option value="Watch">Watch</option>
+    <option value="Activity Tracker">Activity Tracker</option>
+    <option value="Refrigerator">Refrigerator</option>
+    <option value="Computer">Computer</option>
+  <input type="submit" name="search2" value="Filter"><br><br>
 
     <table>
       <tr>
@@ -76,7 +96,6 @@ function filterTable($query)
       </tr>
 <?php endwhile;?>
     </table>
-  </form>
 
 </body>
 </html>
