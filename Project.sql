@@ -153,13 +153,13 @@ CREATE TABLE `Device` (
 --
 
 INSERT INTO `Device` (`Manufacturer`, `DeviceName`, `Type`, `AccessTime`) VALUES
-('Nest Labs', 'Nest Thermostat', 'Home Component', '00:00-24:00'),
-('Apple', 'iPhone', 'Smartphone', '00:00-24:00'),
-('Apple', 'Apple Watch', 'Smartwatch', '00:00-24:00'),
-('Samsung', 'Galaxy Note', 'Smartphone', '00:00-24:00'),
-('LG', 'InstaView', 'Refrigerator', '00:00-24:00'),
-('Apple', 'MacBook', 'Laptop', '00:00-24:00'),
-('Nokia', '7.1', 'Smartphone', '00:00-24:00');
+('Nest Labs', 'Nest Thermostat', 'Home Component', 'Weekdays'),
+('Apple', 'iPhone', 'Smartphone', 'Everyday'),
+('Apple', 'Apple Watch', 'Smartwatch', 'Everyday'),
+('Samsung', 'Galaxy Note', 'Smartphone', 'Everyday'),
+('LG', 'InstaView', 'Refrigerator', 'Evenings'),
+('Apple', 'MacBook', 'Laptop', 'Everyday'),
+('Nokia', '7.1', 'Smartphone', 'Everday');
 
 --
 -- Table structure for table `Device2`
