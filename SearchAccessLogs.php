@@ -16,6 +16,22 @@ else if(isset($_POST['searchDate']))
   $search_result = filterTable($query);
 }
 
+else if(isset($_POST['searchRole']))
+{
+  $role = $_POST['Role'];
+
+  if($role == 'AuthorizedUser')
+  {
+    $query = "SELECT * FROM `Users` AS `U`, `AuthorizedUser` AS `A`, `Data` AS `D` WHERE `U`.`SSN`=`A`.`SSN` AND `U`.`SSN`=`D`.`UserSSN`";
+    $search_result = filterTable($query);
+  }
+  else if($role == 'SecondaryUser')
+  {
+    $query = "SELECT * FROM `Users` AS `U`, `SecondaryUser` AS `S`, `Data` AS `D` WHERE `U`.`SSN`=`S`.`SSN` AND `U`.`SSN`=`D`.`UserSSN`";
+    $search_result = filterTable($query);
+  }
+}
+
 else
 {
     $query = "SELECT * FROM `Users`, `Data` WHERE `SSN`=`UserSSN`";
@@ -63,13 +79,21 @@ function filterTable($query)
   <center>
     <form action="SearchAccessLogs.php" method="post">
       <input type="text" name="ssn" placeholder="SSN (XXX-XX-XXXX)">
-      <input type="submit" name="searchSSN" value="Search"><br><br>
+      <input type="submit" name="searchSSN" value="Search">
     </form>
 
     <form action="SearchAccessLogs.php" method="post">
       <input type="text" name="beginning" placeholder="Beginning">
       <input type="text" name="end" placeholder="End">
-      <input type="submit" name="searchDate" value="Search"><br><br>
+      <input type="submit" name="searchDate" value="Search">
+    </form>
+
+    <form action="SearchAccessLogs.php" method="post">
+      <select type="text" name="Role">
+        <option value="">ALL</option>
+        <option value="AuthorizedUser">Authorized User</option>
+        <option value="SecondaryUser">Secondary User</option>
+      <input type="submit" name="searchRole" value="Search"><br><br>
     </form>
 
     <form>
