@@ -1,21 +1,17 @@
 <?php
 
-if(isset($_POST['valueToSearch']))
+if(($_POST['search']))
 {
     $valueToSearch = $_POST['valueToSearch'];
-    // search in all table columns
-    $query = "SELECT * FROM `Users`, `Data` WHERE `SSN`=`UserSSN` AND (`SSN`) LIKE '%".$valueToSearch."%'";
-   $search_result = filterTable($query);
-
-}
-
-else if(isset($_POST['beginning']) && isset($_POST['beginning']))
-{
     $beginning = $_POST['beginning'];
     $end = $_POST['end'];
+    // search in all table columns
+    if(is_null($valueToSearch)){
+      $query = "SELECT * FROM `Users`, `Data` WHERE `SSN`=`UserSSN` AND `Date` BETWEEN '%".$beginning."%' AND '%".$end."%'";
+    }
+    else $query = "SELECT * FROM `Users`, `Data` WHERE `SSN`=`UserSSN` AND `SSN` LIKE '%".$valueToSearch."%'";
+   $search_result = filterTable($query);
 
-    $query = "SELECT * FROM `Users`, `Data` WHERE `SSN`=`UserSSN` AND `Date` BETWEEN '%".$beginning."%' AND '%".$end."%'";
-    $search_result = filterTable($query);
 }
 
  else {
@@ -66,11 +62,13 @@ function filterTable($query)
     <input type="text" name="valueToSearch" placeholder="SSN (XXX-XX-XXXX)"><br><br>
     <input type="text" name="beginning" placeholder="Beginning">
     <input type="text" name="end" placeholder="End"><br><br>
-    <input type="submit" name="search" value="Filter"><br><br></form>
+    <input type="submit" name="search" value="Search"><br><br></form>
 
     <center>
     <table>
       <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
         <th>Amount</th>
         <th>Location</th>
         <th>Time</th>
@@ -80,6 +78,8 @@ function filterTable($query)
       <!-- populate table from mysql database -->
 <?php while($row = mysqli_fetch_array($search_result)):?>
       <tr>
+        <td><?php echo $row['Fname'];?></td>
+        <td><?php echo $row['Lname'];?></td>
         <td><?php echo $row['Amount'];?></td>
         <td><?php echo $row['Location'];?></td>
         <td><?php echo $row['Time'];?></td>
