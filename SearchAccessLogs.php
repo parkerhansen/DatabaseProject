@@ -32,6 +32,13 @@ else if(isset($_POST['searchRole']))
   }
 }
 
+else if(isset($_POST['searchRule']))
+{
+  $rule = $_POST['rule'];
+  $query = "SELECT * FROM Users AS U, Data AS Da, Device AS De, HasAccessTo AS H WHERE U.SSN=Da.UserSSN AND De.Manufacturer=H.Manufacturer AND De.DeviceName=H.DeviceName AND U.SSN=H.UserSSN AND De.AccessTime='$rule'";
+  $search_result = filterTable($query);
+}
+
 else
 {
     $query = "SELECT * FROM `Users`, `Data` WHERE `SSN`=`UserSSN`";
@@ -90,10 +97,19 @@ function filterTable($query)
 
     <form action="SearchAccessLogs.php" method="post">
       <select type="text" name="Role">
-        <option value="">ALL</option>
         <option value="AuthorizedUser">Authorized User</option>
         <option value="SecondaryUser">Secondary User</option>
-      <input type="submit" name="searchRole" value="Search"><br><br>
+      <input type="submit" name="searchRole" value="Search">
+    </form>
+
+    <form action="SearchAccessLogs.php" method="post">
+      <select type="text" name="rule">
+        <option value="Everyday">Everyday</option>
+        <option value="Weekdays">Weekdays</option>
+        <option value="Weekends">Weekends</option>
+        <option value="Evenings">Evenings</option>
+        <option value="Mornings">Mornings</option>
+      <input type="submit" name="searchRule" value="Search"><br><br>
     </form>
 
     <form>
