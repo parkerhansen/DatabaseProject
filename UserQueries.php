@@ -5,8 +5,8 @@ if(isset($_POST['search']))
     $valueToSearch = $_POST['valueToSearch'];
     // search in all table columns
     // using concat mysql function
-    $query = "SELECT * FROM `Users` AS `U`, `HasAccessTo` AS `H`, `Device2` AS `D` WHERE `SSN`=`UserSSN` AND `D`.`Manufacturer`=`H`.`Manufacturer` AND `D`.`DeviceName`=`H`.`DeviceName` AND (`D`.`DeviceName`) LIKE '%".$valueToSearch."%'";
-   $search_result = filterTable($query);
+    $query = "SELECT * FROM `Users` AS `U`, `HasAccessTo` AS `H`, `Device2` AS `D` WHERE `SSN`=`UserSSN` AND `D`.`Manufacturer`=`H`.`Manufacturer` AND `D`.`DeviceName`=`H`.`DeviceName` AND `D`.`DeviceName`='$valueToSearch'";
+    $search_result = filterTable($query);
 
 }
  else {
@@ -54,17 +54,6 @@ function filterTable($query)
 
   <form action="UserQueries.php" method="post">
     <input type="text" name="valueToSearch" placeholder="Device Name"><br><br>
-    <input type="submit" name="search" value="Filter"><br><br>
-    <select type="text" name="valueToSearch">
-      <option value="">ALL</option>
-      <option value="Thermostat">Thermostat</option>
-      <option value="Internet Access">Internet Access</option>
-      <option value="Phone">Phone</option>
-      <option value="Camera">Camera</option>
-      <option value="Watch">Watch</option>
-      <option value="Activity Tracker">Activity Tracker</option>
-      <option value="Refrigerator">Refrigerator</option>
-      <option value="Computer">Computer</option>
     <input type="submit" name="search" value="Filter"><br><br>
 
     <table>
