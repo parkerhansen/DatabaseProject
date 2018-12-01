@@ -35,7 +35,10 @@ else if(isset($_POST['searchRole']))
 else if(isset($_POST['searchRule']))
 {
   $rule = $_POST['rule'];
-  $query = "SELECT * FROM Users AS U, Data AS Da, Device AS De, HasAccessTo AS H WHERE U.SSN=Da.UserSSN AND De.Manufacturer=H.Manufacturer AND De.DeviceName=H.DeviceName AND U.SSN=H.UserSSN AND De.AccessTime='$rule'";
+  $query = "SELECT Fname, Lname, Amount, Location, Time, Date FROM Users AS U, Data AS Da WHERE U.SSN=Da.UserSSN AND U.SSN IN (
+                  SELECT U.SSN
+                  FROM Users AS U, HasAccessTo AS H, Device AS De
+                  WHERE U.SSN=H.UserSSN AND De.Manufacturer=H.Manufacturer AND De.DeviceName=H.DeviceName AND De.AccessTime='$rule')";
   $search_result = filterTable($query);
 }
 
@@ -104,7 +107,7 @@ function filterTable($query)
 
     <form action="SearchAccessLogs.php" method="post">
       <select type="text" name="rule">
-        <option value="Everyday">Everyday</option>
+        <option value="Every Day">Everyday</option>
         <option value="Weekdays">Weekdays</option>
         <option value="Weekends">Weekends</option>
         <option value="Evenings">Evenings</option>
