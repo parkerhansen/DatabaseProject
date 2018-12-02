@@ -5,7 +5,7 @@ if(isset($_POST['search']))
     $valueToSearch = $_POST['valueToSearch'];
     // search in all table columns
     // using concat mysql function
-    $query = "SELECT * FROM `Users` WHERE (`Fname`) LIKE '%".$valueToSearch."%'";
+    $query = "SELECT * FROM `Users` WHERE `Fname`='$valueToSearch'";
     $search_result = filterTable($query);
 
 }

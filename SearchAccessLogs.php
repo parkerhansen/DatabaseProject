@@ -3,7 +3,7 @@
 if(isset($_POST['searchSSN']))
 {
   $ssn = $_POST['ssn'];
-  $query = "SELECT * FROM `Users`, `Data` WHERE `SSN`=`UserSSN` AND `SSN` LIKE '$ssn'";
+  $query = "SELECT * FROM `Users`, `Data` WHERE `SSN`=`UserSSN` AND `SSN`='$ssn'";
   $search_result = filterTable($query);
 
 }

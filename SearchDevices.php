@@ -4,7 +4,7 @@ if(isset($_POST['search']))
 {
     $valueToSearch = $_POST['valueToSearch'];
     // search in all table columns
-    $query = "SELECT * FROM `Device2` WHERE (`Functionality`) LIKE '%".$valueToSearch."%'";
+    $query = "SELECT * FROM `Device2` WHERE `Functionality`='$valueToSearch'";
    $search_result = filterTable($query);
 
 }
