@@ -8,9 +8,17 @@ if(isset($_POST['searchSSN']))
 
 }
 
+else if(isset($_POST['showExpired']))
+{
+
+  $query = "SELECT * FROM Users AS U, AuthorizedUser AS A, Purchases AS P WHERE U.SSN=A.SSN AND A.SSN=P.UserSSN AND P.PolicyEnd < CURRENT_DATE()";
+  $search_result = filterTable($query);
+
+}
+
 else if(isset($_POST['showAll']))
 {
-  $query = "SELECT * FROM Users AS U, AuthorizedUser AS A, Purchases AS P WHERE U.SSN=A.SSN AND A.SSN=P.UserSSN";
+  $query = "SELECT * FROM Package";
   $search_result = filterTable($query);
 }
 
@@ -59,6 +67,10 @@ function filterTable($query)
     </form>
 
     <form action="SearchPackage.php" method="post">
+      <input type="submit" name="showExpired" value="Show Expired">
+    </form>
+
+    <form action="SearchPackage.php" method="post">
       <input type="submit" name="showAll" value="Show All">
     </form>
 
@@ -85,29 +97,51 @@ function filterTable($query)
 <?php endwhile;
     echo"</table>"?>
 
-
+<!-- if show all is selected will trigger this to show all packages -->
 <?php if(isset($_POST['showAll']))
     { echo"
         <center>
         <table>
           <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
             <th>Provider Name</th>
             <th>Package Name</th>
           </tr>";
     }
 ?>
-          <!-- populate table from mysql database when searching for SSN -->
+          <!-- populate table from mysql database when searching for all packages-->
 <?php if(isset($_POST['showAll'])) while($row = mysqli_fetch_array($search_result)):?>
           <tr>
-            <td><?php echo $row['Fname'];?></td>
-            <td><?php echo $row['Lname'];?></td>
             <td><?php echo $row['ProviderName'];?></td>
             <td><?php echo $row['PackageName'];?></td>
           </tr>
 <?php endwhile;
         echo"</table>"?>
+
+<!-- if show all is selected will trigger this to show all expired packages -->
+<?php if(isset($_POST['showExpired']))
+    { echo"
+          <center>
+          <table>
+          <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Provider Name</th>
+            <th>Package Name</th>
+            <th>Policy End Date</th>
+          </tr>";
+    }
+?>
+<!-- populate table from mysql database when searching for all packages-->
+<?php if(isset($_POST['showExpired'])) while($row = mysqli_fetch_array($search_result)):?>
+          <tr>
+            <td><?php echo $row['Fname'];?></td>
+            <td><?php echo $row['Lname'];?></td>
+            <td><?php echo $row['ProviderName'];?></td>
+            <td><?php echo $row['PackageName'];?></td>
+            <td><?php echo $row['PolicyEnd'];?></td>
+          </tr>
+<?php endwhile;
+echo"</table>"?>
 
 
   <center>
