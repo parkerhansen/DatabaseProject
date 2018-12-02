@@ -565,7 +565,10 @@ INSERT INTO `Package` (`PackageName`, `ProviderName`) VALUES
 ('Unlimited', 'Verizon'),
 ('Unlimited+', 'Verizon'),
 ('Complete', 'Verizon'),
-('Complete+', 'Verizon');
+('Complete+', 'Verizon'),
+('Unlimited', 'T-Mobile'),
+('Unlimted+Home', 'T-Mobile'),
+('Unlimted', 'Sprint');
 
 --
 -- Table structure for table `Package2`
@@ -601,7 +604,11 @@ INSERT INTO `Package2` (`PackageName`, `ProviderName`, `Service`) VALUES
 ('Complete', 'Verizon', 'Limited Wireless Internet'),
 ('Complete', 'Verizon', 'Television'),
 ('Complete+', 'Verizon', 'Basic Unlimited Wireless Internet'),
-('Complete+', 'Verizon', 'Television');
+('Complete+', 'Verizon', 'Television'),
+('Unlimited', 'T-Mobile', 'Wireless Internet'),
+('Unlimted+Home', 'T-Mobile', 'Home Telephone'),
+('Unlimted+Home', 'T-Mobile', 'Wireless Internet'),
+('Unlimted', 'Sprint', 'Wireless Internet');
 
 --
 -- Table structure for table `Purchases`
@@ -610,8 +617,22 @@ INSERT INTO `Package2` (`PackageName`, `ProviderName`, `Service`) VALUES
 CREATE TABLE `Purchases` (
   `UserSSN` varchar(11),
   `PackageName` varchar(20),
-  `PolicyPeriod` varchar(21) NOT NULL,
-  PRIMARY KEY (`UserSSN`, `PackageName`),
+  `ProviderName` varchar(20),
+  `PolicyBegin` date NOT NULL,
+  `PolicyEnd` date NOT NULL,
+  PRIMARY KEY (`UserSSN`, `PackageName`, `ProviderName`),
   FOREIGN KEY (`UserSSN`) REFERENCES `AuthorizedUser` (`SSN`),
-  FOREIGN KEY (`PackageName`) REFERENCES `Package` (`PackageName`)
+  FOREIGN KEY (`PackageName`, `ProviderName`) REFERENCES `Package` (`PackageName`, `ProviderName`)
 );
+
+--
+-- Inserting Purchases Data
+--
+
+INSERT INTO `Purchases` (`UserSSN`, `PackageName`, `ProviderName`, `PolicyBegin`, `PolicyEnd`) VALUES
+('123-45-6789', 'TV + Internet + Phone', 'AT&T', '2012-01-01', '2020-01-01'),
+('453-45-3453', 'DIRECTV + Wireless', 'AT&T', '2015-05-19', '2019-01-01'),
+('666-88-4444', 'Unlimted+Home', 'T-Mobile', '2017-03-18', '2018-11-18'),
+('987-65-4321', 'Basic', 'Verizon', '2017-06-28', '2020-04-01'),
+('987-98-7987', 'Basic', 'Verizon', '2017-12-01', '2020-12-01'),
+('999-88-7777', 'Unlimited', 'T-Mobile', '2018-11-15', '2021-11-15');
