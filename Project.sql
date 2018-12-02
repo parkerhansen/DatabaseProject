@@ -23,7 +23,7 @@ INSERT INTO `Users` (`Fname`, `Minit`, `Lname`, `SSN`, `PhoneNumber`, `DateOfBir
 ('John', 'B', 'Smith', '123-45-6789', '4245930274', '1965-01-09', '731 Fondren', 'TX', 'M'),
 ('Bella', 'T', 'Smith', '333-44-5555', '4247604858', '1966-12-08', '731 Fondren', 'TX', 'F'),
 ('Marthena', 'E', 'Smith', '369-66-0605', '4349727690', '1994-12-26', '731 Fondren', 'TX', 'F'),
-('Joyce', 'A', 'English', '453-45-3453', '2167954402', '1972-07-61', '5631 Rice', 'MO', 'F'),
+('Joyce', 'A', 'English', '453-45-3453', '2167954402', '1972-07-10', '5631 Rice', 'MO', 'F'),
 ('James', 'E', 'English', '888-66-5555', '3749574739', '1999-11-10', '5631 Rice', 'MO', 'M'),
 ('Ramesh', 'K', 'Narayan', '666-88-4444', '4603447747', '1962-09-15', '975 Fire Oak', 'NY', 'M'),
 ('Taber', 'P', 'Narayan', '846-76-7711', '4601990071', '2004-03-28', '975 Fire Oak', 'NY', 'M'),
@@ -487,7 +487,7 @@ INSERT INTO `Provider2` (`ProviderName`, `RegionServed`) VALUES
 
 CREATE TABLE `Provider3` (
   `ProviderName` varchar(20),
-  `ServicesOffered` varchar(20),
+  `ServicesOffered` varchar(50),
   PRIMARY KEY (`ProviderName`, `ServicesOffered`),
   FOREIGN KEY (`ProviderName`) REFERENCES `Provider` (`ProviderName`)
 );
@@ -545,7 +545,7 @@ INSERT INTO `Offers` (`ProviderName`, `Manufacturer`, `DeviceName`) VALUES
 --
 
 CREATE TABLE `Package` (
-  `PackageName` varchar(20),
+  `PackageName` varchar(50),
   `ProviderName` varchar(20),
   PRIMARY KEY (`PackageName`, `ProviderName`),
   FOREIGN KEY (`ProviderName`) REFERENCES `Provider` (`ProviderName`)
@@ -575,9 +575,9 @@ INSERT INTO `Package` (`PackageName`, `ProviderName`) VALUES
 --
 
 CREATE TABLE `Package2` (
-  `PackageName` varchar(20),
+  `PackageName` varchar(50),
   `ProviderName` varchar(20),
-  `Service` varchar(20),
+  `Service` varchar(50),
   PRIMARY KEY (`PackageName`, `ProviderName`, `Service`),
   FOREIGN KEY (`PackageName`) REFERENCES `Package` (`PackageName`),
   FOREIGN KEY (`ProviderName`, `Service`) REFERENCES `Provider3` (`ProviderName`, `ServicesOffered`)
@@ -616,7 +616,7 @@ INSERT INTO `Package2` (`PackageName`, `ProviderName`, `Service`) VALUES
 
 CREATE TABLE `Purchases` (
   `UserSSN` varchar(11),
-  `PackageName` varchar(20),
+  `PackageName` varchar(50),
   `ProviderName` varchar(20),
   `PolicyBegin` date NOT NULL,
   `PolicyEnd` date NOT NULL,
@@ -635,4 +635,10 @@ INSERT INTO `Purchases` (`UserSSN`, `PackageName`, `ProviderName`, `PolicyBegin`
 ('666-88-4444', 'Unlimted+Home', 'T-Mobile', '2017-03-18', '2018-11-18'),
 ('987-65-4321', 'Basic', 'Verizon', '2017-06-28', '2020-04-01'),
 ('987-98-7987', 'Basic', 'Verizon', '2017-12-01', '2020-12-01'),
-('999-88-7777', 'Unlimited', 'T-Mobile', '2018-11-15', '2021-11-15');
+('999-88-7777', 'Unlimited', 'T-Mobile', '2018-11-15', '2021-11-15'),
+('865-06-9004', 'TV + Internet + Phone', 'AT&T', '2015-04-15', '2018-10-15'),
+('203-91-2929', 'Unlimted', 'Sprint', '2018-11-01', '2020-11-01'),
+('182-29-3088', 'DIRECTV + Wireless', 'AT&T', '2015-01-01', '2020-01-01'),
+('480-68-1388', 'Unlimited', 'T-Mobile', '2017-07-17', '2017-07-17'),
+('562-79-9262', 'DIRECTV + Wireless', 'AT&T', '2018-03-18', '2019-03-18'),
+('230-09-2339', 'Unlimted+Home', 'T-Mobile', '2017-12-10', '2019-12-10');
