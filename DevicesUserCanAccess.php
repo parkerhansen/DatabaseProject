@@ -1,16 +1,16 @@
 <?php
 
-if(isset($_POST['search']))
+if(isset($_POST['searchDevice']))
 {
-    $valueToSearch = $_POST['valueToSearch'];
+    $device = $_POST['device'];
     // search in all table columns
     // using concat mysql function
-    $query = "SELECT * FROM `Users` `HasAccessTo` WHERE `SSN` = `UserSSN` AND (`SSN`) LIKE '%".$valueToSearch."%'";
+    $query = "SELECT * FROM `Users`, `HasAccessTo` WHERE `SSN` = `UserSSN` AND (`SSN`) LIKE '%".$device."%'";
     $search_result = filterTable($query);
 
 }
  else {
-    $query = "SELECT * FROM `Users` `HasAccessTo` WHERE `SSN` = `UserSSN`";
+    $query = "SELECT * FROM `Users`, `HasAccessTo` WHERE `SSN` = `UserSSN`";
     $search_result = filterTable($query);
 }
 
@@ -49,11 +49,12 @@ function filterTable($query)
   <h1><center>A DATABASE FOR YOUR INTERNET OF THINGS:</center></h1>
   <center><img src="http://localhost/ElitaDrawing.jpeg" /></center>
   <h2><center>HELPING YOU SEE BOTH THE FOREST AND THE TREES</center></h2>
+  <h2><center><a href="http://localhost/ProjectHTML.html">Back</a></center></h2>
 
 
   <form action="DevicesUserCanAccess.php" method="post">
-    <input type="text" name="valueToSearch" placeholder="Value To Search"><br><br>
-    <input type="submit" name="search" value="Filter"><br><br>
+    <input type="text" name="device" placeholder="Device Name"><br><br>
+    <input type="submit" name="searchDevice" value="Filter"><br><br>
 
     <table>
       <tr>
@@ -77,7 +78,5 @@ function filterTable($query)
     </table>
   </form>
 
-
-<a href="http://localhost/ProjectHTML.html">Back</a>
 </body>
 </html>
