@@ -25,9 +25,51 @@ else if(isset($_POST['searchFunction']))
     $search_result = filterTable($query);
 
 }
-else if(isset($_POST['showAllDevices'])) {
+else if(isset($_POST['showAllDevices']))
+{
     $query = "SELECT * FROM `Device`";
     $search_result = filterTable($query);
+}
+
+else if(isset($_POST['insertDevice']))
+{
+  $deviceNameEdit = $_POST['deviceNameEdit'];
+  $manufacturerNameEdit = $_POST['manufacturerNameEdit'];
+  $typeEdit = $_POST['typeEdit'];
+  $functionalityEdit = $_POST['functionalityEdit'];
+  $ruleEdit = $_POST['ruleEdit'];
+  // Insert device
+  $query= "INSERT INTO `Device` (`Manufacturer`, `DeviceName`, `Type`, `AccessTime`) VALUES ('$manufacturerNameEdit', '$deviceNameEdit', '$typeEdit', '$ruleEdit')";
+  $query2= "INSERT INTO `Device2` (`Manufacturer`, `DeviceName`, `Functionality`) VALUES ('$manufacturerNameEdit', '$deviceNameEdit', '$functionalityEdit')";
+
+  $connect = mysqli_connect(`Localhost`, 'root', `Project`);
+  mysqli_select_db($connect, "Project");
+  if (mysqli_query($connect, $query) && mysqli_query($connect, $query2)) {
+    echo "New device inserted successfully";
+  }
+  else {
+    echo "Error:" . $query . "<br>" . mysqli_error($connect);
+    echo "Error:" . $query2 . "<br>" . mysqli_error($connect);
+  }
+}
+
+else if(isset($_POST['deleteDevice']))
+{
+  $deviceNameEdit = $_POST['deviceNameEdit'];
+  $manufacturerNameEdit = $_POST['manufacturerNameEdit'];
+  // Insert device
+  $query= "DELETE FROM `Device2` WHERE `Manufacturer`='$manufacturerNameEdit' AND `DeviceName`='$deviceNameEdit'";
+  $query2= "DELETE FROM `Device` WHERE `Manufacturer`='$manufacturerNameEdit' AND `DeviceName`='$deviceNameEdit'";
+
+  $connect = mysqli_connect(`Localhost`, 'root', `Project`);
+  mysqli_select_db($connect, "Project");
+  if (mysqli_query($connect, $query) && mysqli_query($connect, $query2)) {
+    echo "Device deleted successfully";
+  }
+  else {
+    echo "Error:" . $query . "<br>" . mysqli_error($connect);
+    echo "Error:" . $query2 . "<br>" . mysqli_error($connect);
+  }
 }
 
 // function to connect and execute the query
@@ -69,7 +111,30 @@ function filterTable($query)
 
 
   <center>
+<table>
+  <tr>
+    <td>
+      <form action="SearchDevices.php" method="post">
+      <center>Insert/Delete a Device<br>
+      Manufacturer: <input type="text" name="manufacturerNameEdit" required>
+      Device Name: <input type="text" name="deviceNameEdit" required><br>
+      Type: <input type="text" name="typeEdit"><br>
+      Functionality: <input type="text" name="functionalityEdit"><br>
+      When can you Access?: <select type="text" name="ruleEdit"><br>
+        <option>--Chose a Access Rule--</option>
+        <option value="Every Day">Everyday</option>
+        <option value="Weekdays">Weekdays</option>
+        <option value="Weekends">Weekends</option>
+        <option value="Evenings">Evenings</option>
+        <option value="Mornings">Mornings</option></select><br>
+      <input type="submit" name="insertDevice" value="Insert">
+      <input type="submit" name="deleteDevice" value="Delete">
+      </center>
+      </form>
+    </td>
 
+    <td>
+    <center>
     <form action="SearchDevices.php" method="post">
       <input type="text" name="manufacturerName" placeholder="Manufacturer Name">
       <input type="text" name="deviceName" placeholder="Device Name">
@@ -95,9 +160,14 @@ function filterTable($query)
         <input type="submit" name="searchFunction" value="Search">
     </form>
 
-  <form action="SearchDevices.php" method="post">
-    <input type="submit" name="showAllDevices" value="Show All">
-  </form>
+    <form action="SearchDevices.php" method="post">
+      <input type="submit" name="showAllDevices" value="Show All">
+    </form>
+    </center>
+    </td>
+  </tr>
+</table>
+
 
 <!-- If a functionality is selected execute this sequence to display results -->
 <?php if(isset($_POST['searchFunction']))
