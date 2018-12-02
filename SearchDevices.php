@@ -1,15 +1,32 @@
 <?php
 
-if(isset($_POST['search']))
+if (isset($_POST['searchDeviceName']))
+{
+    $manufacturerName = $_POST['manufacturerName'];
+    $deviceName = $_POST['deviceName'];
+    // search in all table columns
+    $query = "SELECT * FROM Device2 WHERE Manufacturer='$manufacturerName' AND DeviceName='$deviceName'";
+    $search_result = filterTable($query);
+}
+
+else if(isset($_POST['searchSSN']))
+{
+  $ssn = $_POST['ssn'];
+  // search in all table columns
+  $query = "SELECT * FROM Users AS U, HasAccessTo AS H WHERE U.SSN=H.UserSSN AND U.SSN='$ssn'";
+  $search_result = filterTable($query);
+}
+
+else if(isset($_POST['searchFunction']))
 {
     $valueToSearch = $_POST['valueToSearch'];
     // search in all table columns
     $query = "SELECT * FROM `Device2` WHERE `Functionality`='$valueToSearch'";
-   $search_result = filterTable($query);
+    $search_result = filterTable($query);
 
 }
- else {
-    $query = "SELECT * FROM `Device2`";
+else if(isset($_POST['showAllDevices'])) {
+    $query = "SELECT * FROM `Device`";
     $search_result = filterTable($query);
 }
 
@@ -51,36 +68,132 @@ function filterTable($query)
   <h2><center><a href="http://localhost/ProjectHTML.html">Back</a></center></h2>
 
 
-  <center><form action="SearchDevices.php" method="post">
-    <select type="text" name="valueToSearch">
-      <option value="">ALL</option>
-      <option value="Thermostat">Thermostat</option>
-      <option value="Internet Access">Internet Access</option>
-      <option value="Phone">Phone</option>
-      <option value="Camera">Camera</option>
-      <option value="Watch">Watch</option>
-      <option value="Activity Tracker">Activity Tracker</option>
-      <option value="Refrigerator">Refrigerator</option>
-      <option value="Computer">Computer</option>
-    <input type="submit" name="search" value="Filter"><br><br>
+  <center>
 
+    <form action="SearchDevices.php" method="post">
+      <input type="text" name="manufacturerName" placeholder="Manufacturer Name">
+      <input type="text" name="deviceName" placeholder="Device Name">
+      <input type="submit" name="searchDeviceName" value="Search">
+    </form>
+
+    <form action="SearchDevices.php" method="post">
+      What devices does a user have access to?:<input type="text" name="ssn" placeholder="User SSN (XXX-XX-XXXX)">
+      <input type="submit" name="searchSSN" value="Search">
+    </form>
+
+    <form action="SearchDevices.php" method="post">
+      <select type="text" name="valueToSearch">
+        <option>--Choose a Functionality--</option>
+        <option value="Thermostat">Thermostat</option>
+        <option value="Internet Access">Internet Access</option>
+        <option value="Phone">Phone</option>
+        <option value="Camera">Camera</option>
+        <option value="Watch">Watch</option>
+        <option value="Activity Tracker">Activity Tracker</option>
+        <option value="Refrigerator">Refrigerator</option>
+        <option value="Computer">Computer</option>
+        <input type="submit" name="searchFunction" value="Search">
+    </form>
+
+  <form action="SearchDevices.php" method="post">
+    <input type="submit" name="showAllDevices" value="Show All">
+  </form>
+
+<!-- If a functionality is selected execute this sequence to display results -->
+<?php if(isset($_POST['searchFunction']))
+{
+  echo"
     <center><table>
       <tr>
         <th>Manufacturer</th>
         <th>Device Name</th>
         <th>Functionality</th>
-      </tr>
+      </tr>";
+}
+?>
 
-      <!-- populate table from mysql database -->
-<?php if(isset($_POST['search'])) while($row = mysqli_fetch_array($search_result)):?>
+<!-- populate table from mysql database -->
+<?php if(isset($_POST['searchFunction'])) while($row = mysqli_fetch_array($search_result)):?>
       <tr>
         <td><?php echo $row['Manufacturer'];?></td>
         <td><?php echo $row['DeviceName'];?></td>
         <td><?php echo $row['Functionality'];?></td>
       </tr>
-<?php endwhile;?>
-    </table>
-  </form><center>
+<?php endwhile;
+    echo"</table>";?>
+
+
+<!-- If a SSN is inputted execute this sequence to display results -->
+<?php if(isset($_POST['searchSSN']))
+{
+  echo"
+    <center><table>
+      <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Manufacturer</th>
+        <th>Device Name</th>
+      </tr>";
+}
+?>
+
+<!-- populate table from mysql database -->
+<?php if(isset($_POST['searchSSN'])) while($row = mysqli_fetch_array($search_result)):?>
+      <tr>
+        <td><?php echo $row['Fname'];?></td>
+        <td><?php echo $row['Lname'];?></td>
+        <td><?php echo $row['Manufacturer'];?></td>
+        <td><?php echo $row['DeviceName'];?></td>
+      </tr>
+<?php endwhile;
+    echo"</table>";?>
+
+<!-- If a functionality is selected execute this sequence to display results -->
+<?php if(isset($_POST['showAllDevices']))
+{
+  echo"
+    <center><table>
+      <tr>
+        <th>Manufacturer</th>
+        <th>Device Name</th>
+        <th>Type</th>
+      </tr>";
+}
+?>
+
+<!-- populate table from mysql database -->
+<?php if(isset($_POST['showAllDevices'])) while($row = mysqli_fetch_array($search_result)):?>
+      <tr>
+        <td><?php echo $row['Manufacturer'];?></td>
+        <td><?php echo $row['DeviceName'];?></td>
+        <td><?php echo $row['Type'];?></td>
+      </tr>
+<?php endwhile;
+    echo"</table>";?>
+    <center>
+
+<!-- If Manufacturer and Device Name is inputted, execute this sequence to display results -->
+<?php if(isset($_POST['searchDeviceName']))
+{
+  echo"
+    <center><table>
+      <tr>
+        <th>Manufacturer</th>
+        <th>Device Name</th>
+        <th>Functionality</th>
+      </tr>";
+}
+?>
+
+<!-- populate table from mysql database -->
+<?php if(isset($_POST['searchDeviceName'])) while($row = mysqli_fetch_array($search_result)):?>
+      <tr>
+        <td><?php echo $row['Manufacturer'];?></td>
+        <td><?php echo $row['DeviceName'];?></td>
+        <td><?php echo $row['Functionality'];?></td>
+      </tr>
+<?php endwhile;
+    echo"</table>";?>
 
 </body>
 </html>
