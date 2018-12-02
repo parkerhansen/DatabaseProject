@@ -3,15 +3,15 @@
 if(isset($_POST['searchSSN']))
 {
   $ssn = $_POST['ssn'];
-  $query = "SELECT * FROM Users AS U, AuthorizedUser AS A, Purchases AS P WHERE U.SSN=A.SSN AND A.SSN=P.UserSSN AND SSN='$ssn'";
+  $query = "SELECT * FROM Users AS U, AuthorizedUser AS A, Purchases AS P WHERE U.SSN=A.SSN AND A.SSN=P.UserSSN AND U.SSN='$ssn'";
   $search_result = filterTable($query);
 
 }
 
-else
+else if(isset($_POST['showAll']))
 {
-    $query = "SELECT * FROM Users AS U, AuthorizedUser AS A, Purchases AS P WHERE U.SSN=A.SSN AND A.SSN=P.UserSSN";
-    $search_result = filterTable($query);
+  $query = "SELECT * FROM Users AS U, AuthorizedUser AS A, Purchases AS P WHERE U.SSN=A.SSN AND A.SSN=P.UserSSN";
+  $search_result = filterTable($query);
 }
 
 // function to connect and execute the query
@@ -58,10 +58,12 @@ function filterTable($query)
       <input type="submit" name="searchSSN" value="Search">
     </form>
 
-    <form>
-      <input type="button" value="Show All" onclick="window.location.href='SearchPackage.php'" />
+    <form action="SearchPackage.php" method="post">
+      <input type="submit" name="showAll" value="Show All">
     </form>
 
+<?php if(isset($_POST['searchSSN']))
+{ echo"
     <center>
     <table>
       <tr>
@@ -69,18 +71,45 @@ function filterTable($query)
         <th>Last Name</th>
         <th>Provider Name</th>
         <th>Package Name</th>
-      </tr>
-
-      <!-- populate table from mysql database -->
-<?php while($row = mysqli_fetch_array($search_result)):?>
+      </tr>";
+}
+?>
+      <!-- populate table from mysql database when searching for SSN -->
+<?php if(isset($_POST['searchSSN'])) while($row = mysqli_fetch_array($search_result)):?>
       <tr>
         <td><?php echo $row['Fname'];?></td>
         <td><?php echo $row['Lname'];?></td>
         <td><?php echo $row['ProviderName'];?></td>
         <td><?php echo $row['PackageName'];?></td>
       </tr>
-<?php endwhile;?>
-    </table>
+<?php endwhile;
+    echo"</table>"?>
+
+
+<?php if(isset($_POST['showAll']))
+    { echo"
+        <center>
+        <table>
+          <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Provider Name</th>
+            <th>Package Name</th>
+          </tr>";
+    }
+?>
+          <!-- populate table from mysql database when searching for SSN -->
+<?php if(isset($_POST['showAll'])) while($row = mysqli_fetch_array($search_result)):?>
+          <tr>
+            <td><?php echo $row['Fname'];?></td>
+            <td><?php echo $row['Lname'];?></td>
+            <td><?php echo $row['ProviderName'];?></td>
+            <td><?php echo $row['PackageName'];?></td>
+          </tr>
+<?php endwhile;
+        echo"</table>"?>
+
+
   <center>
 
 </body>
