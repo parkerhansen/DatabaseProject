@@ -73,6 +73,22 @@ else if(isset($_POST['deleteDevice']))
   }
 }
 
+else if(isset($_POST['searchRole']))
+{
+  $role = $_POST['role'];
+
+  if($role == 'AuthorizedUser')
+  {
+    $query = "SELECT * FROM `Users` AS `U`, `AuthorizedUser` AS `A`, `HasAccessTo` AS `H` WHERE `U`.`SSN`=`A`.`SSN` AND `U`.`SSN`=`H`.`UserSSN`";
+    $search_result = filterTable($query);
+  }
+  else if($role == 'SecondaryUser')
+  {
+    $query = "SELECT * FROM `Users` AS `U`, `SecondaryUser` AS `S`, `HasAccessTo` AS `H` WHERE `U`.`SSN`=`S`.`SSN` AND `U`.`SSN`=`H`.`UserSSN`";
+    $search_result = filterTable($query);
+  }
+}
+
 // function to connect and execute the query
 function filterTable($query)
 {
@@ -145,6 +161,13 @@ function filterTable($query)
     <form action="SearchDevices.php" method="post">
       What devices does a user have access to?:<input type="text" name="ssn" placeholder="User SSN (XXX-XX-XXXX)" required>
       <input type="submit" name="searchSSN" value="Search">
+    </form>
+
+    <form action="SearchDevices.php" method="post">
+      What devices does a user have access to?:<select type="text" name="role" required>
+        <option value="AuthorizedUser">Authorized User</option>
+        <option value="SecondaryUser">Secondary User</option>
+      <input type="submit" name="searchRole" value="Search">
     </form>
 
     <form action="SearchDevices.php" method="post">
@@ -261,6 +284,31 @@ function filterTable($query)
         <td><?php echo $row['Manufacturer'];?></td>
         <td><?php echo $row['DeviceName'];?></td>
         <td><?php echo $row['Functionality'];?></td>
+      </tr>
+<?php endwhile;
+    echo"</table>";?>
+
+<!-- If a SSN is inputted execute this sequence to display results -->
+<?php if(isset($_POST['searchRole']))
+{
+  echo"
+    <center><table>
+      <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Manufacturer</th>
+        <th>Device Name</th>
+      </tr>";
+}
+?>
+
+<!-- populate table from mysql database -->
+<?php if(isset($_POST['searchRole'])) while($row = mysqli_fetch_array($search_result)):?>
+      <tr>
+        <td><?php echo $row['Fname'];?></td>
+        <td><?php echo $row['Lname'];?></td>
+        <td><?php echo $row['Manufacturer'];?></td>
+        <td><?php echo $row['DeviceName'];?></td>
       </tr>
 <?php endwhile;
     echo"</table>";?>
