@@ -98,12 +98,31 @@ else if(isset($_POST['deleteUser']))
   }
 }
 
+//Show All Users
 else if(isset($_POST['showAllUsers']))
 {
   $query = "SELECT * FROM `Users`, `HasAccessTo` WHERE `SSN`=`UserSSN`";
   $search_result = filterTable($query);
 }
 
+//Search User by Role
+else if(isset($_POST['searchRole']))
+{
+  $role = $_POST['role'];
+  //query to find users
+  if($role == 'AuthorizedUser')
+  {
+    $query = "SELECT * FROM `Users` AS `U`, `AuthorizedUser` AS `A` WHERE `U`.`SSN`=`A`.`SSN`";
+    $search_result = filterTable($query);
+  }
+  else if($role == 'SecondaryUser')
+  {
+    $query = "SELECT * FROM `Users` AS `U`, `SecondaryUser` AS `S` WHERE `U`.`SSN`=`S`.`SSN`";
+    $search_result = filterTable($query);
+  }
+}
+
+//Default
 else {
     $query = "SELECT * FROM `Users` AS `U`, `HasAccessTo` AS `H`, `Device2` AS `D` WHERE `SSN`=`UserSSN` AND `D`.`Manufacturer`=`H`.`Manufacturer` AND `D`.`DeviceName`=`H`.`DeviceName`";
     $search_result = filterTable($query);
@@ -174,12 +193,12 @@ function filterTable($query)
       </form>
 
       <form action="Users.php" method="post">
-        <input type="text" name="deviceName" placeholder="Device Name" required>
+        Device Name:<input type="text" name="deviceName" placeholder="Device Name" required>
         <input type="submit" name="searchDeviceName" value="Filter"><br>
       </form>
 
       <form action="Users.php" method="post">
-        <select type="text" name="functionalityToSearch" required>
+        Functionality:<select type="text" name="functionalityToSearch" required>
           <option value="Thermostat">Thermostat</option>
           <option value="Internet Access">Internet Access</option>
           <option value="Phone">Phone</option>
@@ -192,8 +211,16 @@ function filterTable($query)
       </form>
 
       <form action="Users.php" method="post">
+        Role:<select type="text" name="role" required>
+          <option value="AuthorizedUser">Authorized User</option>
+          <option value="SecondaryUser">Secondary User</option>
+        <input type="submit" name="searchRole" value="Search">
+      </form>
+
+      <form action="Users.php" method="post">
         <input type="submit" name="showAllUsers" value="Show All">
       </form>
+
     </center>
   </td>
 </tr>
@@ -231,7 +258,7 @@ function filterTable($query)
     echo"</table></center>";?>
 
 <!-- If a Device Name is imputted this sequence displays the results -->
-<?php if(isset($_POST['searchDeviceName']) or isset($_POST['showAllUsers']))
+<?php if(isset($_POST['searchDeviceName']))
 {
   echo"
     <center><table>
@@ -245,7 +272,7 @@ function filterTable($query)
 ?>
 
 <!-- populate table from mysql database -->
-<?php if(isset($_POST['searchDeviceName']) or isset($_POST['showAllUsers'])) while($row = mysqli_fetch_array($search_result)):?>
+<?php if(isset($_POST['searchDeviceName'])) while($row = mysqli_fetch_array($search_result)):?>
       <tr>
           <td><?php echo $row['Fname'];?></td>
           <td><?php echo $row['Lname'];?></td>
@@ -278,6 +305,28 @@ function filterTable($query)
         <td><?php echo $row['PhoneNumber'];?></td>
         <td><?php echo $row['DeviceName'];?></td>
         <td><?php echo $row['Functionality'];?></td>
+      </tr>
+<?php endwhile;
+  echo"</table></center>";?>
+
+<?php if(isset($_POST['showAllUsers']) or isset($_POST['searchRole']))
+{
+  echo"
+    <center><table>
+      <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Phone Number</th>
+      </tr>";
+}
+?>
+
+<!-- populate table from mysql database -->
+<?php if(isset($_POST['showAllUsers']) or isset($_POST['searchRole'])) while($row = mysqli_fetch_array($search_result)):?>
+      <tr>
+          <td><?php echo $row['Fname'];?></td>
+          <td><?php echo $row['Lname'];?></td>
+          <td><?php echo $row['PhoneNumber'];?></td>
       </tr>
 <?php endwhile;
   echo"</table></center>";?>
