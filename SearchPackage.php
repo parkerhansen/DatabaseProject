@@ -57,10 +57,14 @@ function filterTable($query)
   <h1><center>A DATABASE FOR YOUR INTERNET OF THINGS:</center></h1>
   <center><img src="http://localhost/ElitaDrawing.jpeg" /></center>
   <h2><center>HELPING YOU SEE BOTH THE FOREST AND THE TREES</center></h2>
-  <h2><center><a href="http://localhost/ProjectHTML.html">Back</a></center></h2>
+  <h2><center><a href="http://localhost/WebInterface.html">Back</a></center></h2>
 
 
   <center>
+    <table>
+      <tr>
+        <td>
+          <center>
     <form action="SearchPackage.php" method="post">
       <input type="text" name="ssn" placeholder="SSN (XXX-XX-XXXX)">
       <input type="submit" name="searchSSN" value="Search">
@@ -73,6 +77,11 @@ function filterTable($query)
     <form action="SearchPackage.php" method="post">
       <input type="submit" name="showAll" value="Show All">
     </form>
+  </center>
+  </td>
+</tr>
+</table>
+</center>
 
 <?php if(isset($_POST['searchSSN']))
 { echo"
