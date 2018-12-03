@@ -42,6 +42,29 @@ else if(isset($_POST['searchRule']))
   $search_result = filterTable($query);
 }
 
+else if(isset($_POST['insertLog']))
+{
+  $ssnNew = $_POST['ssnNew'];
+  $locationNew = $_POST['locationNew'];
+  $amountNew = $_POST['amountNew'];
+  $timeNew = $_POST['timeNew'];
+  $dateNew = $_POST['dateNew'];
+  // Insert device
+  $query2= "INSERT INTO `Data` (`UserSSN`, `Location`, `Amount`, `Time`, `Date`) VALUES ('$ssnNew', '$locationNew', '$amountNew', '$timeNew', '$dateNew')";
+
+  $connect = mysqli_connect(`Localhost`, 'root', `Project`);
+  mysqli_select_db($connect, "Project");
+  if (mysqli_query($connect, $query2)) {
+    echo "New log inserted successfully";
+  }
+  else {
+    echo "Error:" . $query2 . "<br>" . mysqli_error($connect);
+  }
+
+  $query = "SELECT * FROM `Users`, `Data` WHERE `SSN`=`UserSSN`";
+  $search_result = filterTable($query);
+}
+
 else
 {
     $query = "SELECT * FROM `Users`, `Data` WHERE `SSN`=`UserSSN`";
@@ -86,7 +109,23 @@ function filterTable($query)
   <h2><center><a href="http://localhost/ProjectHTML.html">Back</a></center></h2>
 
 
-  <center>
+<center>
+<table>
+  <tr>
+    <td><center>
+    <form action="SearchAccessLogs.php" method="post">
+    <b><u>Log new use</u></b><br><br>
+    User SSN: <input type="text" name="ssnNew" placeholder="XXX-XX-XXXX" required><br>
+    Location (State Abrev): <input type="text" name="locationNew" placeholder="XX" required><br>
+    Amount (MB): <input type="text" name="amountNew" required><br>
+    Time of Use (24hr): <input type="text" name="timeNew" placeholder="XX:XX" required><br>
+    Date of Use: <input type="text" name="dateNew" placeholder="Year-Month-Date" required><br>
+    <input type="submit" name="insertLog" value="Insert">
+    </form>
+
+    </center></td>
+
+    <td><center>
     <form action="SearchAccessLogs.php" method="post">
       <input type="text" name="ssn" placeholder="SSN (XXX-XX-XXXX)">
       <input type="submit" name="searchSSN" value="Search">
@@ -112,12 +151,15 @@ function filterTable($query)
         <option value="Weekends">Weekends</option>
         <option value="Evenings">Evenings</option>
         <option value="Mornings">Mornings</option>
-      <input type="submit" name="searchRule" value="Search"><br><br>
+      <input type="submit" name="searchRule" value="Search"><br>
     </form>
 
     <form>
-      <input type="button" value="Show All" onclick="window.location.href='SearchAccessLogs.php'" />
+      <input type="button" value="Show All" onclick="window.location.href='http://localhost/SearchAccessLogs.php'">
     </form>
+  </center></td>
+  </tr>
+</table>
 
     <center>
     <table>

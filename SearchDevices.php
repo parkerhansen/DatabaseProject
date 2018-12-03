@@ -213,7 +213,7 @@ function filterTable($query)
         <td><?php echo $row['Functionality'];?></td>
       </tr>
 <?php endwhile;
-    echo"</table>";?>
+    echo"</table></center>";?>
 
 
 <!-- If a SSN is inputted execute this sequence to display results -->
@@ -239,7 +239,7 @@ function filterTable($query)
         <td><?php echo $row['DeviceName'];?></td>
       </tr>
 <?php endwhile;
-    echo"</table>";?>
+    echo"</table></center>";?>
 
 <!-- If a functionality is selected execute this sequence to display results -->
 <?php if(isset($_POST['showAllDevices']))
@@ -262,7 +262,7 @@ function filterTable($query)
         <td><?php echo $row['Type'];?></td>
       </tr>
 <?php endwhile;
-    echo"</table>";?>
+    echo"</table></center>";?>
     <center>
 
 <!-- If Manufacturer and Device Name is inputted, execute this sequence to display results -->
@@ -286,7 +286,7 @@ function filterTable($query)
         <td><?php echo $row['Functionality'];?></td>
       </tr>
 <?php endwhile;
-    echo"</table>";?>
+    echo"</table></center>";?>
 
 <!-- If a SSN is inputted execute this sequence to display results -->
 <?php if(isset($_POST['searchRole']))
@@ -311,7 +311,7 @@ function filterTable($query)
         <td><?php echo $row['DeviceName'];?></td>
       </tr>
 <?php endwhile;
-    echo"</table>";?>
+    echo"</table></center>";?>
 
 </body>
 </html>
