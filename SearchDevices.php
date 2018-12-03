@@ -132,7 +132,7 @@ function filterTable($query)
   <tr>
     <td>
       <form action="SearchDevices.php" method="post">
-      <center>Insert/Delete a Device<br>
+      <center><b><u>Insert/Delete a Device</u></b><br><br>
       Manufacturer: <input type="text" name="manufacturerNameEdit" required>
       Device Name: <input type="text" name="deviceNameEdit" required><br>
       Type: <input type="text" name="typeEdit"><br>
