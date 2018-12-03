@@ -183,10 +183,24 @@ function filterTable($query)
         <th>Location</th>
         <th>Time</th>
         <th>Date</th>
+<<<<<<< HEAD
       </tr>";
 }
 ?>
 
+=======
+      </tr>
+<head>
+<style type="text/css">
+body{
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+form{
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+  </style>
+</head>
+>>>>>>> parent of 6d5b866... trying to merge??
 
       <!-- populate table from mysql database -->
 <?php if(isset($_POST['searchSSN']) or isset($_POST['searchDate']) or isset($_POST['searchRole']) or isset($_POST['searchRule'])) while($row = mysqli_fetch_array($search_result)):?>

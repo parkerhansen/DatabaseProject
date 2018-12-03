@@ -121,9 +121,14 @@ function filterTable($query)
 
 <html>
 <head>
+<<<<<<< HEAD
 <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:100,100i&amp;subset=latin-ext" rel="stylesheet">
     <style>
 
+=======
+  <link href="https://fonts.googleapis.com/css?family=Sedgwick+Ave" rel="stylesheet">
+  <style>
+>>>>>>> parent of 6d5b866... trying to merge??
     table, th, td {
       border: 1px solid black;
       border-collapse: collapse;
@@ -131,6 +136,7 @@ function filterTable($query)
     th, td {
       padding: 15px;
     }
+<<<<<<< HEAD
 
   h1{
     font-family: 'IBM Plex Sans', sans-serif;
@@ -139,6 +145,15 @@ function filterTable($query)
     font-family: 'IBM Plex Sans', sans-serif;
   }
     </style>
+=======
+    h1{
+      font-family: 'Sedgwick Ave', cursive;
+    }
+    h2{
+      font-family: 'Sedgwick Ave', cursive;
+    }
+  </style>
+>>>>>>> parent of 6d5b866... trying to merge??
 </head>
 <body>
 
@@ -213,6 +228,7 @@ function filterTable($query)
   </tr>
 </table>
 
+<<<<<<< HEAD
 <head>
 <style type="text/css">
 table{
@@ -230,6 +246,8 @@ input[type='submit']
   </style>
 </head>
 
+=======
+>>>>>>> parent of 6d5b866... trying to merge??
 
 <!-- If a functionality is selected execute this sequence to display results -->
 <?php if(isset($_POST['searchFunction']))

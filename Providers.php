@@ -52,7 +52,7 @@ function filterTable($query)
 
 <html>
 <head>
-<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:100,100i&amp;subset=latin-ext" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Sedgwick+Ave" rel="stylesheet">
   <style>
     table, th, td {
       border: 1px solid black;
@@ -62,11 +62,19 @@ function filterTable($query)
       padding: 15px;
     }
     h1{
+<<<<<<< HEAD
     font-family: 'IBM Plex Sans', sans-serif;
   }
   h2{
     font-family: 'IBM Plex Sans', sans-serif;
   }
+=======
+      font-family: 'Sedgwick Ave', cursive;
+    }
+    h2{
+      font-family: 'Sedgwick Ave', cursive;
+    }
+>>>>>>> parent of 6d5b866... trying to merge??
   </style>
 </head>
 <body>
@@ -102,6 +110,7 @@ function filterTable($query)
 <br>
 <br>
 
+<<<<<<< HEAD
 <head>
 <style type="text/css">
 table{
@@ -118,6 +127,8 @@ input[type='submit']
 
   </style>
 </head>
+=======
+>>>>>>> parent of 6d5b866... trying to merge??
 
 <!-- If a functionality is selected execute this sequence to display results -->
 <?php if(isset($_POST['showAll']))

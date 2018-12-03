@@ -234,6 +234,7 @@ function filterTable($query)
 table{
   font-family: 'IBM Plex Sans', sans-serif;
 }
+<<<<<<< HEAD
 body{
   font-family: 'IBM Plex Sans', sans-serif;
 }
@@ -249,6 +250,8 @@ input[type='button']
 input[type='radio']
 {font-family: 'IBM Plex Sans', sans-serif;}
 
+=======
+>>>>>>> parent of 6d5b866... trying to merge??
   </style>
 </head>
 

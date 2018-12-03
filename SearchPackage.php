@@ -77,11 +77,14 @@ function filterTable($query)
     <form action="SearchPackage.php" method="post">
       <input type="submit" name="showAll" value="Show All">
     </form>
+<<<<<<< HEAD
   </center>
   </td>
 </tr>
 </table>
 </center>
+=======
+>>>>>>> parent of 6d5b866... trying to merge??
 
 <?php if(isset($_POST['searchSSN']))
 { echo"
