@@ -53,6 +53,25 @@ else if(isset($_POST['insertDevice']))
   }
 }
 
+else if(isset($_POST['modifyDevice']))
+{
+  $deviceNameEdit = $_POST['deviceNameEdit'];
+  $manufacturerNameEdit = $_POST['manufacturerNameEdit'];
+  $typeEdit = $_POST['typeEdit'];
+  // Modify device
+  if($deviceNameEdit != "")
+  $query= "UPDATE `Device` SET `Type`='$typeEdit' WHERE `DeviceName`='$deviceNameEdit' AND `Manufacturer`='$manufacturerNameEdit'";
+
+  $connect = mysqli_connect(`Localhost`, 'root', `Project`);
+  mysqli_select_db($connect, "Project");
+  if (mysqli_query($connect, $query)) {
+    echo "Device type changed successfully";
+  }
+  else {
+    echo "Error:" . $query . "<br>" . mysqli_error($connect);
+  }
+}
+
 else if(isset($_POST['deleteDevice']))
 {
   $deviceNameEdit = $_POST['deviceNameEdit'];
@@ -147,6 +166,7 @@ function filterTable($query)
         <option value="Evenings">Evenings</option>
         <option value="Mornings">Mornings</option></select><br>
       <input type="submit" name="insertDevice" value="Insert">
+      <input type="submit" name="modifyDevice" value="Modify Type">
       <input type="submit" name="deleteDevice" value="Delete">
       </center>
       </form>
@@ -282,7 +302,7 @@ input[type='submit']
       </tr>
 <?php endwhile;
     echo"</table></center>";?>
-    <center>
+
 
 <!-- If Manufacturer and Device Name is inputted, execute this sequence to display results -->
 <?php if(isset($_POST['searchDeviceName']))
