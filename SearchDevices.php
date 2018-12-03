@@ -164,7 +164,7 @@ function filterTable($query)
     </form>
 
     <form action="SearchDevices.php" method="post">
-      What devices does a user have access to?:<select type="text" name="role" required>
+      What devices does a role have access to?:<select type="text" name="role" required>
         <option value="AuthorizedUser">Authorized User</option>
         <option value="SecondaryUser">Secondary User</option>
       <input type="submit" name="searchRole" value="Search">
