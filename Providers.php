@@ -83,7 +83,7 @@ function filterTable($query)
     <td>
       <center>
       <form action="Providers.php" method="post">
-        Insert/Delete a Provider<br>
+        <b><u>Insert/Delete a Provider</u></b><br>
         Provider Name: <input type="text" name="ProviderName" placeholder="Name" required><br>
         Phone Number: <input type="text" name="PhoneNumber" placeholder="XXXXXXXXXX"><br>
         <input type="submit" name="insertProvider" value="Insert">
