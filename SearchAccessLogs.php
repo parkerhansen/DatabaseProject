@@ -177,6 +177,9 @@ function filterTable($query)
 body{
   font-family: 'IBM Plex Sans', sans-serif;
 }
+form{
+  font-family: 'IBM Plex Sans', sans-serif;
+}
   </style>
 </head>
 
