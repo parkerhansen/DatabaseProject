@@ -234,6 +234,21 @@ function filterTable($query)
 table{
   font-family: 'IBM Plex Sans', sans-serif;
 }
+body{
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+input[type='text']
+{font-family: 'IBM Plex Sans', sans-serif;}
+
+input[type='submit']
+{font-family: 'IBM Plex Sans', sans-serif;}
+
+input[type='button']
+{font-family: 'IBM Plex Sans', sans-serif;}
+
+input[type='radio']
+{font-family: 'IBM Plex Sans', sans-serif;}
+
   </style>
 </head>
 

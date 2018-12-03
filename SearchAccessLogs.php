@@ -172,14 +172,24 @@ function filterTable($query)
         <th>Time</th>
         <th>Date</th>
       </tr>
-<head>
+      <head>
 <style type="text/css">
+table{
+  font-family: 'IBM Plex Sans', sans-serif;
+}
 body{
   font-family: 'IBM Plex Sans', sans-serif;
 }
-form{
-  font-family: 'IBM Plex Sans', sans-serif;
-}
+input[type='text']
+{font-family: 'IBM Plex Sans', sans-serif;}
+
+input[type='submit']
+{font-family: 'IBM Plex Sans', sans-serif;}
+
+input[type='button']
+{font-family: 'IBM Plex Sans', sans-serif;}
+
+
   </style>
 </head>
 

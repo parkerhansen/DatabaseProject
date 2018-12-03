@@ -37,7 +37,7 @@ else if(isset($_POST['deleteProvider']))
 
 <html>
 <head>
-  <link href="https://fonts.googleapis.com/css?family=Sedgwick+Ave" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:100,100i&amp;subset=latin-ext" rel="stylesheet">
   <style>
     table, th, td {
       border: 1px solid black;
@@ -47,11 +47,11 @@ else if(isset($_POST['deleteProvider']))
       padding: 15px;
     }
     h1{
-      font-family: 'Sedgwick Ave', cursive;
-    }
-    h2{
-      font-family: 'Sedgwick Ave', cursive;
-    }
+    font-family: 'IBM Plex Sans', sans-serif;
+  }
+  h2{
+    font-family: 'IBM Plex Sans', sans-serif;
+  }       
   </style>
 </head>
 <body>
@@ -82,6 +82,22 @@ else if(isset($_POST['deleteProvider']))
 <br>
 <br>
 
+<head>
+<style type="text/css">
+table{
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+body{
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+input[type='text']
+{font-family: 'IBM Plex Sans', sans-serif;}
+
+input[type='submit']
+{font-family: 'IBM Plex Sans', sans-serif;}
+
+  </style>
+</head>
 
 </body>
 </html>
