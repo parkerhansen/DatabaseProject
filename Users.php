@@ -15,8 +15,8 @@ else if(isset($_POST['searchDeviceName']))
     $deviceName = $_POST['deviceName'];
     // search in all table columns
     // using concat mysql function
-    $query = "SELECT * FROM `Users` AS `U`, `HasAccessTo` AS `H`, `Device2` AS `D`
-              WHERE `SSN`=`UserSSN` AND `D`.`Manufacturer`=`H`.`Manufacturer` AND `D`.`DeviceName`=`H`.`DeviceName` AND `D`.`DeviceName`='$deviceName'";
+    $query = "SELECT * FROM `Users` AS `U`, `HasAccessTo` AS `H`
+              WHERE `SSN`=`UserSSN` AND `H`.`DeviceName`='$deviceName'";
     $search_result = filterTable($query);
 }
 
@@ -96,6 +96,12 @@ else if(isset($_POST['deleteUser']))
     echo "Error:" . $query . "<br>" . mysqli_error($connect);
     echo "Error:" . $query2 . "<br>" . mysqli_error($connect);
   }
+}
+
+else if(isset($_POST['showAllUsers']))
+{
+  $query = "SELECT * FROM `Users`, `HasAccessTo` WHERE `SSN`=`UserSSN`";
+  $search_result = filterTable($query);
 }
 
 else {
@@ -184,6 +190,10 @@ function filterTable($query)
           <option value="Computer">Computer</option>
         <input type="submit" name="searchFunctionality" value="Filter"><br>
       </form>
+
+      <form action="Users.php" method="post">
+        <input type="submit" name="showAllUsers" value="Show All">
+      </form>
     </center>
   </td>
 </tr>
@@ -221,7 +231,7 @@ function filterTable($query)
     echo"</table></center>";?>
 
 <!-- If a Device Name is imputted this sequence displays the results -->
-<?php if(isset($_POST['searchDeviceName']))
+<?php if(isset($_POST['searchDeviceName']) or isset($_POST['showAllUsers']))
 {
   echo"
     <center><table>
@@ -230,19 +240,17 @@ function filterTable($query)
         <th>Last Name</th>
         <th>Phone Number</th>
         <th>Device Name</th>
-        <th>Functionality</th>
         </tr>";
 }
 ?>
 
 <!-- populate table from mysql database -->
-<?php if(isset($_POST['searchDeviceName'])) while($row = mysqli_fetch_array($search_result)):?>
+<?php if(isset($_POST['searchDeviceName']) or isset($_POST['showAllUsers'])) while($row = mysqli_fetch_array($search_result)):?>
       <tr>
           <td><?php echo $row['Fname'];?></td>
           <td><?php echo $row['Lname'];?></td>
           <td><?php echo $row['PhoneNumber'];?></td>
           <td><?php echo $row['DeviceName'];?></td>
-          <td><?php echo $row['Functionality'];?></td>
       </tr>
 <?php endwhile;
   echo"</table></center>";?>
