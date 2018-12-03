@@ -84,7 +84,7 @@ function filterTable($query)
 
 <html>
 <head>
-  <link href="https://fonts.googleapis.com/css?family=Sedgwick+Ave" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:100,100i&amp;subset=latin-ext" rel="stylesheet">
   <style>
     table, th, td {
       border: 1px solid black;
@@ -94,14 +94,15 @@ function filterTable($query)
       padding: 15px;
     }
     h1{
-      font-family: 'Sedgwick Ave', cursive;
-    }
-    h2{
-      font-family: 'Sedgwick Ave', cursive;
-    }
+    font-family: 'IBM Plex Sans', sans-serif;
+  }
+  h2{
+    font-family: 'IBM Plex Sans', sans-serif;
+  }
   </style>
 </head>
 <body>
+
 
   <h1><center>A DATABASE FOR YOUR INTERNET OF THINGS:</center></h1>
   <center><img src="http://localhost/ElitaDrawing.jpeg" /></center>
@@ -171,6 +172,16 @@ function filterTable($query)
         <th>Time</th>
         <th>Date</th>
       </tr>
+<head>
+<style type="text/css">
+body{
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+form{
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+  </style>
+</head>
 
       <!-- populate table from mysql database -->
 <?php while($row = mysqli_fetch_array($search_result)):?>
