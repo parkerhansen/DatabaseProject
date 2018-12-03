@@ -57,6 +57,7 @@ else if(isset($_POST['deleteDevice']))
 {
   $deviceNameEdit = $_POST['deviceNameEdit'];
   $manufacturerNameEdit = $_POST['manufacturerNameEdit'];
+  $functionalityEdit = $_POST['functionalityEdit'];
   // Insert device
   $query= "DELETE FROM `Device2` WHERE `Manufacturer`='$manufacturerNameEdit' AND `DeviceName`='$deviceNameEdit'";
   $query2= "DELETE FROM `Device` WHERE `Manufacturer`='$manufacturerNameEdit' AND `DeviceName`='$deviceNameEdit'";
@@ -121,7 +122,7 @@ function filterTable($query)
       Type: <input type="text" name="typeEdit"><br>
       Functionality: <input type="text" name="functionalityEdit"><br>
       When can you Access?: <select type="text" name="ruleEdit"><br>
-        <option>--Chose a Access Rule--</option>
+        <option value="">--Chose a Access Rule--</option>
         <option value="Every Day">Everyday</option>
         <option value="Weekdays">Weekdays</option>
         <option value="Weekends">Weekends</option>
@@ -136,19 +137,18 @@ function filterTable($query)
     <td>
     <center>
     <form action="SearchDevices.php" method="post">
-      <input type="text" name="manufacturerName" placeholder="Manufacturer Name">
-      <input type="text" name="deviceName" placeholder="Device Name">
+      <input type="text" name="manufacturerName" placeholder="Manufacturer Name" required>
+      <input type="text" name="deviceName" placeholder="Device Name" required>
       <input type="submit" name="searchDeviceName" value="Search">
     </form>
 
     <form action="SearchDevices.php" method="post">
-      What devices does a user have access to?:<input type="text" name="ssn" placeholder="User SSN (XXX-XX-XXXX)">
+      What devices does a user have access to?:<input type="text" name="ssn" placeholder="User SSN (XXX-XX-XXXX)" required>
       <input type="submit" name="searchSSN" value="Search">
     </form>
 
     <form action="SearchDevices.php" method="post">
-      <select type="text" name="valueToSearch">
-        <option>--Choose a Functionality--</option>
+      Chose a Functionality<select type="text" name="valueToSearch" required>
         <option value="Thermostat">Thermostat</option>
         <option value="Internet Access">Internet Access</option>
         <option value="Phone">Phone</option>
