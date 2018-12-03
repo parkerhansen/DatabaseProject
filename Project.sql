@@ -74,8 +74,8 @@ INSERT INTO `AuthorizedUser` (`SSN`, `CustomerID`) VALUES
 
 CREATE TABLE `SecondaryUser` (
   `SSN` varchar(11),
-  `AuthUserSSN` varchar(11) NOT NULL,
-  `RelationshipToAuthUser` varchar(20) NOT NULL,
+  `AuthUserSSN` varchar(11),
+  `RelationshipToAuthUser` varchar(20),
   PRIMARY KEY (`SSN`),
   FOREIGN KEY (`AuthUserSSN`) REFERENCES `AuthorizedUser` (`SSN`),
   FOREIGN KEY (`SSN`) REFERENCES `Users` (`SSN`)

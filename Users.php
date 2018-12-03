@@ -37,16 +37,6 @@ else if(isset($_POST['insertUser']))
   // Insert User
   $query= "INSERT INTO `Users` (`Fname`, `Lname`, `SSN`, `PhoneNumber`) VALUES ('$fNameEdit', '$lNameEdit', '$userSSNEdit', '$pNumberEdit')";
 
-  // Insert into Authorized User or Secondary User
-  if($uRole == 'Auth')
-  {
-    $queryAuth="INSERT INTO `AuthorizedUser` (`SSN`) VALUES ('$userSSNEdit')";
-  }
-  else if($uRole == 'Sec')
-  {
-    $querySec="INSERT INTO `SecondaryUser` (`SSN`) VALUES ('$userSSNEdit')";
-  }
-
   $connect = mysqli_connect(`Localhost`, 'root', `Project`);
   mysqli_select_db($connect, "Project");
   if (mysqli_query($connect, $query)) {
@@ -56,12 +46,33 @@ else if(isset($_POST['insertUser']))
     echo "Error:" . $query . "<br>" . mysqli_error($connect);
     echo "Error:" . $query2 . "<br>" . mysqli_error($connect);
   }
-  if(mysqli_query($connect, $queryAuth) OR mysqli_query($connect, $querySec)) {
-    echo "<br>Role inserted successfully";
+
+  // Insert into Authorized User or Secondary User
+  if($uRole == 'Auth')
+  {
+    $queryAuth="INSERT INTO `AuthorizedUser` (`SSN`) VALUES ('$userSSNEdit')";
+
+    $connect = mysqli_connect(`Localhost`, 'root', `Project`);
+    mysqli_select_db($connect, "Project");
+    if(mysqli_query($connect, $queryAuth)) {
+      echo "<br>Role inserted successfully";
+    }
+    else {
+      echo "Error:" . $queryAuth . "<br>" . mysqli_error($connect);
+    }
   }
-  else {
-    echo "Error:" . $queryAuth . "<br>" . mysqli_error($connect);
-    echo "Error:" . $querySec . "<br>" . mysqli_error($connect);
+  else if($uRole == 'Sec')
+  {
+    $querySec="INSERT INTO `SecondaryUser` (`SSN`) VALUES ('$userSSNEdit')";
+
+    $connect = mysqli_connect(`Localhost`, 'root', `Project`);
+    mysqli_select_db($connect, "Project");
+    if(mysqli_query($connect, $querySec)) {
+      echo "<br>Role inserted successfully";
+    }
+    else {
+      echo "Error:" . $querySec . "<br>" . mysqli_error($connect);
+    }
   }
 }
 
@@ -73,22 +84,33 @@ else if(isset($_POST['deleteUser']))
   if($uRole == 'Auth')
   {
     $queryAuth= "DELETE FROM `AuthorizedUser` WHERE `SSN`='$userSSNEdit'";
+
+    $connect = mysqli_connect(`Localhost`, 'root', `Project`);
+    mysqli_select_db($connect, "Project");
+    if(mysqli_query($connect, $queryAuth)) {
+      echo "<br>Role inserted successfully";
+    }
+    else {
+      echo "Error:" . $queryAuth . "<br>" . mysqli_error($connect);
+    }
   }
   else if($uRole == 'Sec')
   {
     $querySec= "DELETE FROM `SecondaryUser` WHERE `SSN`='$userSSNEdit'";
+
+    $connect = mysqli_connect(`Localhost`, 'root', `Project`);
+    mysqli_select_db($connect, "Project");
+    if(mysqli_query($connect, $querySec)) {
+      echo "<br>Role inserted successfully";
+    }
+    else {
+      echo "Error:" . $querySec . "<br>" . mysqli_error($connect);
+    }
   }
   $query= "DELETE FROM `Users` WHERE `SSN`='$userSSNEdit'";
 
   $connect = mysqli_connect(`Localhost`, 'root', `Project`);
   mysqli_select_db($connect, "Project");
-  if(mysqli_query($connect, $queryAuth) OR mysqli_query($connect, $querySec)) {
-    echo "<br>User role deleted successfully";
-  }
-  else {
-    echo "Error:" . $queryAuth . "<br>" . mysqli_error($connect);
-    echo "Error:" . $querySec . "<br>" . mysqli_error($connect);
-  }
   if (mysqli_query($connect, $query)) {
     echo "User deleted successfully";
   }
@@ -101,7 +123,7 @@ else if(isset($_POST['deleteUser']))
 //Show All Users
 else if(isset($_POST['showAllUsers']))
 {
-  $query = "SELECT * FROM `Users`, `HasAccessTo` WHERE `SSN`=`UserSSN`";
+  $query = "SELECT * FROM `Users`";
   $search_result = filterTable($query);
 }
 
@@ -152,12 +174,13 @@ function filterTable($query)
       padding: 15px;
     }
 
-  h1{
-    font-family: 'IBM Plex Sans', sans-serif;
-  }
-  h2{
-    font-family: 'IBM Plex Sans', sans-serif;
-  }
+    body{
+      background-color: rgb(255, 255, 255);
+      color: rgb(26, 83, 66);
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-weight: 100;
+      font-size: 30px;
+    }
     </style>
 </head>
 
@@ -166,7 +189,7 @@ function filterTable($query)
   <h1><center>A DATABASE FOR YOUR INTERNET OF THINGS:</center></h1>
   <center><img src="http://localhost/ElitaDrawing.jpeg" /></center>
   <h2><center>HELPING YOU SEE BOTH THE FOREST AND THE TREES</center></h2>
-  <h2><center><a href="http://localhost/WebInterface.html">Back</a></center></h2>
+  <h4><center><a href="http://localhost/WebInterface.html">Back</a></center></h4>
 
 
 <center>
@@ -233,21 +256,19 @@ function filterTable($query)
 <style type="text/css">
 table{
   font-family: 'IBM Plex Sans', sans-serif;
-}
-body{
-  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 20px;
 }
 input[type='text']
-{font-family: 'IBM Plex Sans', sans-serif;}
+{font-family: 'IBM Plex Sans', sans-serif;
+font-size: 15px;}
 
 input[type='submit']
-{font-family: 'IBM Plex Sans', sans-serif;}
-
-input[type='button']
-{font-family: 'IBM Plex Sans', sans-serif;}
+{font-family: 'IBM Plex Sans', sans-serif;
+font-size: 15px;}
 
 input[type='radio']
-{font-family: 'IBM Plex Sans', sans-serif;}
+{font-family: 'IBM Plex Sans', sans-serif;
+font-size: 20px;}
 
   </style>
 </head>

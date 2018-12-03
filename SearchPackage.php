@@ -35,7 +35,7 @@ function filterTable($query)
 
 <html>
 <head>
-  <link href="https://fonts.googleapis.com/css?family=Sedgwick+Ave" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:100,100i&amp;subset=latin-ext" rel="stylesheet">
   <style>
     table, th, td {
       border: 1px solid black;
@@ -44,12 +44,24 @@ function filterTable($query)
     th, td {
       padding: 15px;
     }
-    h1{
-      font-family: 'Sedgwick Ave', cursive;
+    body{
+      background-color: rgb(255, 255, 255);
+      color: rgb(26, 83, 66);
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-weight: 100;
+      font-size: 30px;
     }
-    h2{
-      font-family: 'Sedgwick Ave', cursive;
+    table{
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 20px;
     }
+    input[type='text']
+    {font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 15px;}
+
+    input[type='submit']
+    {font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 15px;}
   </style>
 </head>
 <body>
@@ -57,7 +69,7 @@ function filterTable($query)
   <h1><center>A DATABASE FOR YOUR INTERNET OF THINGS:</center></h1>
   <center><img src="http://localhost/ElitaDrawing.jpeg" /></center>
   <h2><center>HELPING YOU SEE BOTH THE FOREST AND THE TREES</center></h2>
-  <h2><center><a href="http://localhost/WebInterface.html">Back</a></center></h2>
+  <h4><center><a href="http://localhost/WebInterface.html">Back</a></center></h4>
 
 
   <center>
