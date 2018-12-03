@@ -8,6 +8,14 @@ if(isset($_POST['searchSSN']))
 
 }
 
+else if(isset($_POST['addData']))
+{
+  $ssn = $_POST['ssn'];
+  $query = "SELECT Fname, Lname, SUM(Amount) AS sum_amt FROM `Users`, `Data` WHERE `SSN`=`UserSSN` AND `SSN`='$ssn' GROUP BY SSN";
+  $search_result = filterTable($query);
+
+}
+
 else if(isset($_POST['searchDate']))
 {
   $beginning = $_POST['beginning'];
@@ -107,7 +115,7 @@ function filterTable($query)
   <h1><center>A DATABASE FOR YOUR INTERNET OF THINGS:</center></h1>
   <center><img src="http://localhost/ElitaDrawing.jpeg" /></center>
   <h2><center>HELPING YOU SEE BOTH THE FOREST AND THE TREES</center></h2>
-  <h2><center><a href="http://localhost/ProjectHTML.html">Back</a></center></h2>
+  <h2><center><a href="http://localhost/WebInterface.html">Back</a></center></h2>
 
 
 <center>
@@ -129,7 +137,8 @@ function filterTable($query)
     <td><center>
     <form action="SearchAccessLogs.php" method="post">
       <input type="text" name="ssn" placeholder="SSN (XXX-XX-XXXX)">
-      <input type="submit" name="searchSSN" value="Search">
+      <input type="submit" name="searchSSN" value="Search Logs">
+      <input type="submit" name="addData" value="Total Usage">
     </form>
 
     <form action="SearchAccessLogs.php" method="post">
@@ -162,6 +171,9 @@ function filterTable($query)
   </tr>
 </table>
 
+<?php if(isset($_POST['searchSSN']) or isset($_POST['searchDate']) or isset($_POST['searchRole']) or isset($_POST['searchRule']))
+{
+  echo"
     <center>
     <table>
       <tr>
@@ -171,38 +183,13 @@ function filterTable($query)
         <th>Location</th>
         <th>Time</th>
         <th>Date</th>
-      </tr>
-      <head>
-<style type="text/css">
-table{
-  font-family: 'IBM Plex Sans', sans-serif;
-  font-size: 20px;
+      </tr>";
 }
-body{
-  font-family: 'IBM Plex Sans', sans-serif;
-  font-size: 20px;
-}
-input[type='text']
-{font-family: 'IBM Plex Sans', sans-serif;
-  font-size: 20px;
-}
+?>
 
-input[type='submit']
-{font-family: 'IBM Plex Sans', sans-serif;
-  font-size: 15px;
-}
-
-input[type='button']
-{font-family: 'IBM Plex Sans', sans-serif;
-  font-size: 15px;
-}
-
-
-  </style>
-</head>
 
       <!-- populate table from mysql database -->
-<?php while($row = mysqli_fetch_array($search_result)):?>
+<?php if(isset($_POST['searchSSN']) or isset($_POST['searchDate']) or isset($_POST['searchRole']) or isset($_POST['searchRule'])) while($row = mysqli_fetch_array($search_result)):?>
       <tr>
         <td><?php echo $row['Fname'];?></td>
         <td><?php echo $row['Lname'];?></td>
@@ -214,6 +201,48 @@ input[type='button']
 <?php endwhile;?>
     </table>
   <center>
+
+<?php if(isset($_POST['addData']))
+{
+  echo"
+    <center><table>
+      <tr>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Total Amount</th>";
+}
+?>
+
+<!-- populate table from mysql database -->
+<?php if(isset($_POST['addData'])) while($row = mysqli_fetch_array($search_result)):?>
+      <tr>
+        <td><?php echo $row['Fname'];?></td>
+        <td><?php echo $row['Lname'];?></td>
+        <td><?php echo $row['sum_amt'];?></td>
+      </tr>
+<?php endwhile;
+    echo"</table></center>";?>
+
+    <head>
+<style type="text/css">
+table{
+font-family: 'IBM Plex Sans', sans-serif;
+}
+body{
+font-family: 'IBM Plex Sans', sans-serif;
+}
+input[type='text']
+{font-family: 'IBM Plex Sans', sans-serif;}
+
+input[type='submit']
+{font-family: 'IBM Plex Sans', sans-serif;}
+
+input[type='button']
+{font-family: 'IBM Plex Sans', sans-serif;}
+
+
+</style>
+</head>
 
 </body>
 </html>

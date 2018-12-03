@@ -53,6 +53,25 @@ else if(isset($_POST['insertDevice']))
   }
 }
 
+else if(isset($_POST['modifyDevice']))
+{
+  $deviceNameEdit = $_POST['deviceNameEdit'];
+  $manufacturerNameEdit = $_POST['manufacturerNameEdit'];
+  $typeEdit = $_POST['typeEdit'];
+  // Modify device
+  if($deviceNameEdit != "")
+  $query= "UPDATE `Device` SET `Type`='$typeEdit' WHERE `DeviceName`='$deviceNameEdit' AND `Manufacturer`='$manufacturerNameEdit'";
+
+  $connect = mysqli_connect(`Localhost`, 'root', `Project`);
+  mysqli_select_db($connect, "Project");
+  if (mysqli_query($connect, $query)) {
+    echo "Device type changed successfully";
+  }
+  else {
+    echo "Error:" . $query . "<br>" . mysqli_error($connect);
+  }
+}
+
 else if(isset($_POST['deleteDevice']))
 {
   $deviceNameEdit = $_POST['deviceNameEdit'];
@@ -103,7 +122,7 @@ function filterTable($query)
 <html>
 <head>
 <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:100,100i&amp;subset=latin-ext" rel="stylesheet">
-    <style>  
+    <style>
 
     table, th, td {
       border: 1px solid black;
@@ -118,7 +137,7 @@ function filterTable($query)
   }
   h2{
     font-family: 'IBM Plex Sans', sans-serif;
-  }       
+  }
     </style>
 </head>
 <body>
@@ -126,7 +145,7 @@ function filterTable($query)
   <h1><center>A DATABASE FOR YOUR INTERNET OF THINGS:</center></h1>
   <center><img src="http://localhost/ElitaDrawing.jpeg" /></center>
   <h2><center>HELPING YOU SEE BOTH THE FOREST AND THE TREES</center></h2>
-  <h2><center><a href="http://localhost/ProjectHTML.html">Back</a></center></h2>
+  <h2><center><a href="http://localhost/WebInterface.html">Back</a></center></h2>
 
 
   <center>
@@ -147,6 +166,7 @@ function filterTable($query)
         <option value="Evenings">Evenings</option>
         <option value="Mornings">Mornings</option></select><br>
       <input type="submit" name="insertDevice" value="Insert">
+      <input type="submit" name="modifyDevice" value="Modify Type">
       <input type="submit" name="deleteDevice" value="Delete">
       </center>
       </form>
@@ -197,21 +217,16 @@ function filterTable($query)
 <style type="text/css">
 table{
   font-family: 'IBM Plex Sans', sans-serif;
-  font-size: 20px;
 }
 body{
   font-family: 'IBM Plex Sans', sans-serif;
-  font-size: 20px;
 }
 input[type='text']
-{font-family: 'IBM Plex Sans', sans-serif;
-  font-size: 20px;
-}
+{font-family: 'IBM Plex Sans', sans-serif;}
 
 input[type='submit']
-{font-family: 'IBM Plex Sans', sans-serif;
-  font-size: 15px;
-}
+{font-family: 'IBM Plex Sans', sans-serif;}
+
   </style>
 </head>
 
@@ -287,7 +302,7 @@ input[type='submit']
       </tr>
 <?php endwhile;
     echo"</table></center>";?>
-    <center>
+
 
 <!-- If Manufacturer and Device Name is inputted, execute this sequence to display results -->
 <?php if(isset($_POST['searchDeviceName']))
