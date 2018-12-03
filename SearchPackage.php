@@ -35,7 +35,7 @@ function filterTable($query)
 
 <html>
 <head>
-  <link href="https://fonts.googleapis.com/css?family=Sedgwick+Ave" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:100,100i&amp;subset=latin-ext" rel="stylesheet">
   <style>
     table, th, td {
       border: 1px solid black;
@@ -45,11 +45,11 @@ function filterTable($query)
       padding: 15px;
     }
     h1{
-      font-family: 'Sedgwick Ave', cursive;
-    }
-    h2{
-      font-family: 'Sedgwick Ave', cursive;
-    }
+    font-family: 'IBM Plex Sans', sans-serif;
+  }
+  h2{
+    font-family: 'IBM Plex Sans', sans-serif;
+  }
   </style>
 </head>
 <body>
@@ -73,6 +73,34 @@ function filterTable($query)
     <form action="SearchPackage.php" method="post">
       <input type="submit" name="showAll" value="Show All">
     </form>
+
+
+<head> 
+<style type="text/css">
+table{
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 20px;
+}
+body{
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 20px;
+}
+input[type='text']
+{font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 20px;
+}
+
+input[type='submit']
+{font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 15px;
+}
+
+input[type='button']
+{font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 15px;
+}
+</style>
+</head>
 
 <?php if(isset($_POST['searchSSN']))
 { echo"

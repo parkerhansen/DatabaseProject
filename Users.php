@@ -233,7 +233,32 @@ function filterTable($query)
 <style type="text/css">
 table{
   font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 20px;
 }
+body{
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 20px;
+}
+input[type='text']
+{font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 20px;
+}
+
+input[type='submit']
+{font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 15px;
+}
+
+input[type='button']
+{font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 15px;
+}
+
+input[type='radio']
+{font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 20px;
+  }
+
   </style>
 </head>
 
