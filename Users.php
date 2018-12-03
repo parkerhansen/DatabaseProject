@@ -141,8 +141,9 @@ function filterTable($query)
 
 <html>
 <head>
-  <link href="https://fonts.googleapis.com/css?family=Sedgwick+Ave" rel="stylesheet">
-  <style>
+<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:100,100i&amp;subset=latin-ext" rel="stylesheet">
+    <style>  
+
     table, th, td {
       border: 1px solid black;
       border-collapse: collapse;
@@ -150,14 +151,16 @@ function filterTable($query)
     th, td {
       padding: 15px;
     }
-    h1{
-      font-family: 'Sedgwick Ave', cursive;
-    }
-    h2{
-      font-family: 'Sedgwick Ave', cursive;
-    }
-  </style>
+
+  h1{
+    font-family: 'IBM Plex Sans', sans-serif;
+  }
+  h2{
+    font-family: 'IBM Plex Sans', sans-serif;
+  }       
+    </style>
 </head>
+
 <body>
 
   <h1><center>A DATABASE FOR YOUR INTERNET OF THINGS:</center></h1>
@@ -225,6 +228,14 @@ function filterTable($query)
   </td>
 </tr>
 </table>
+
+<head>
+<style type="text/css">
+table{
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+  </style>
+</head>
 
 <!-- If a SSN is imputted this sequence displays the results -->
 <?php if(isset($_POST['searchSSN']))
