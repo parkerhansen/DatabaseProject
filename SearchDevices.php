@@ -313,5 +313,6 @@ function filterTable($query)
 <?php endwhile;
     echo"</table></center>";?>
 
+</center>
 </body>
 </html>

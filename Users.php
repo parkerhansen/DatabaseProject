@@ -1,129 +1,105 @@
-<html>
-<head>
-  <link href="https://fonts.googleapis.com/css?family=Sedgwick+Ave" rel="stylesheet">
-  <style>
-    body{
-      font-family: 'Sedgwick Ave', cursive;
-    }
-  </style>
-</head>
-<body>
-<h1><center>A DATABASE FOR YOUR INTERNET OF THINGS:</center></h1>
-<center><img src="http://localhost/ElitaDrawing.jpeg" /></center>
-<h2><center>HELPING YOU SEE BOTH THE FOREST AND THE TREES</center></h2>
-
-<form action="InsertUsers.php" method="post">
-
-<center>Insert a new user</center><br>
-
-User SSN: <input type="text" name="SSN" placeholder="XXX-XX-XXXX"><br><br>
-
-First Name: <input type="text" name="Fname"><br><br>
-
-Last Name: <input type="text" name="Lname"><br><br>
-
-Gender:
-<input type="radio" name="Sex" value="F">Female
-<input type="radio" name="Sex" value="M">Male
-<input type="radio" name="Sex" value="O">Other <br><br>
-
-Authorized User?:
-<input type="radio" name="AuthUser" value="Yes">Yes
-<input type="radio" name="AuthUser" value="No">No <br><br>
-
-<input type="submit" name="SubmitUser" value="Insert">
-
-</form>
-
-</td>
-</tr>
-</table>
-
 <?php
 
-require 'Connector.php';
-
-mysqli_select_db($conn, "Project");
-
-$sql="INSERT INTO `Users` (`Fname`, `Lname`, `SSN`, `Sex`) VALUES
-  ('$_POST[Fname]', '$_POST[Lname]', '$_POST[SSN]', '$_POST[Sex]')";
-
-if (mysqli_query($conn, $sql)) {
-  echo "New User record created successfully";
-}
-else {
-  echo "Error:" . $sql . "<br>" . mysqli_error($conn);
-}
-
-if($_POST['AuthUser'] == 'Yes') {
-  $sql="INSERT INTO `AuthorizedUser` (`SSN`, `CustomerID`) VALUES
-    ('$_POST[SSN]', '$_POST[CustID]')";
-
-    if (mysqli_query($conn, $sql)) {
-      echo "<br><br>Authorized User record created successfully";
-    }
-    else {
-      echo "Error:" . $sql . "<br>" . mysqli_error($conn);
-    }
-}
-
-else if ($_POST['AuthUser'] == 'No') {
-  $sql="INSERT INTO `SecondaryUser` (`SSN`) VALUES
-    ('$_POST[SSN]')";
-
-  if (mysqli_query($conn, $sql)) {
-    echo "<br><br>Secondary User record created successfully";
-  }
-  else {
-    echo "Error:" . $sql . "<br>" . mysqli_error($conn);
-  }
-
-
-mysqli_close($conn);
-}
-
-else {
-echo"Provide Information";
-mysqli_close($conn);
-}
-?>
-
-<form method="post">
-
-  Customer ID: <input type="text" name="CustID" /><br><br>
-  <input type="submit" />
-
-</form>
-
-<?php
-
-while (!empty($_POST["SSN"]))
-
- ?>
-
-<br>
-<br>
-
-<a href="http://localhost/ProjectHTML.html">Back</a>
-
-
-</body>
-</html>
-
-
-<?php
-
-if(isset($_POST['search']))
+if(isset($_POST['searchSSN']))
 {
-    $valueToSearch = $_POST['valueToSearch'];
+    $userSSN = $_POST['userSSN'];
     // search in all table columns
     // using concat mysql function
-    $query = "SELECT * FROM `Users` WHERE `Fname`='$valueToSearch'";
+    $query = "SELECT * FROM `Users` WHERE `SSN`='$userSSN'";
     $search_result = filterTable($query);
 
 }
- else {
-    $query = "SELECT * FROM `Users`";
+
+else if(isset($_POST['searchDeviceName']))
+{
+    $deviceName = $_POST['deviceName'];
+    // search in all table columns
+    // using concat mysql function
+    $query = "SELECT * FROM `Users` AS `U`, `HasAccessTo` AS `H`, `Device2` AS `D`
+              WHERE `SSN`=`UserSSN` AND `D`.`Manufacturer`=`H`.`Manufacturer` AND `D`.`DeviceName`=`H`.`DeviceName` AND `D`.`DeviceName`='$deviceName'";
+    $search_result = filterTable($query);
+}
+
+else if(isset($_POST['searchFunctionality']))
+{
+    $functionalityToSearch = $_POST['functionalityToSearch'];
+    $query = "SELECT * FROM `Users` AS `U`, `HasAccessTo` AS `H`, `Device2` AS `D` WHERE `SSN`=`UserSSN` AND `D`.`Manufacturer`=`H`.`Manufacturer` AND `D`.`DeviceName`=`H`.`DeviceName` AND `D`.`Functionality`='$functionalityToSearch'";
+    $search_result = filterTable($query);
+}
+
+else if(isset($_POST['insertUser']))
+{
+  $userSSNEdit = $_POST['userSSNEdit'];
+  $fNameEdit = $_POST['fNameEdit'];
+  $lNameEdit = $_POST['lNameEdit'];
+  $pNumberEdit = $_POST['pNumberEdit'];
+  $uRole = $_POST['AuthUser'];
+  // Insert User
+  $query= "INSERT INTO `Users` (`Fname`, `Lname`, `SSN`, `PhoneNumber`) VALUES ('$fNameEdit', '$lNameEdit', '$userSSNEdit', '$pNumberEdit')";
+
+  // Insert into Authorized User or Secondary User
+  if($uRole == 'Auth')
+  {
+    $queryAuth="INSERT INTO `AuthorizedUser` (`SSN`) VALUES ('$userSSNEdit')";
+  }
+  else if($uRole == 'Sec')
+  {
+    $querySec="INSERT INTO `SecondaryUser` (`SSN`) VALUES ('$userSSNEdit')";
+  }
+
+  $connect = mysqli_connect(`Localhost`, 'root', `Project`);
+  mysqli_select_db($connect, "Project");
+  if (mysqli_query($connect, $query)) {
+    echo "New User inserted successfully";
+  }
+  else {
+    echo "Error:" . $query . "<br>" . mysqli_error($connect);
+    echo "Error:" . $query2 . "<br>" . mysqli_error($connect);
+  }
+  if(mysqli_query($connect, $queryAuth) OR mysqli_query($connect, $querySec)) {
+    echo "<br>Role inserted successfully";
+  }
+  else {
+    echo "Error:" . $queryAuth . "<br>" . mysqli_error($connect);
+    echo "Error:" . $querySec . "<br>" . mysqli_error($connect);
+  }
+}
+
+else if(isset($_POST['deleteUser']))
+{
+  $userSSNEdit = $_POST['userSSNEdit'];
+  $uRole = $_POST['AuthUser'];
+  // Delete User from Authorized or Secondary first
+  if($uRole == 'Auth')
+  {
+    $queryAuth= "DELETE FROM `AuthorizedUser` WHERE `SSN`='$userSSNEdit'";
+  }
+  else if($uRole == 'Sec')
+  {
+    $querySec= "DELETE FROM `SecondaryUser` WHERE `SSN`='$userSSNEdit'";
+  }
+  $query= "DELETE FROM `Users` WHERE `SSN`='$userSSNEdit'";
+
+  $connect = mysqli_connect(`Localhost`, 'root', `Project`);
+  mysqli_select_db($connect, "Project");
+  if(mysqli_query($connect, $queryAuth) OR mysqli_query($connect, $querySec)) {
+    echo "<br>User role deleted successfully";
+  }
+  else {
+    echo "Error:" . $queryAuth . "<br>" . mysqli_error($connect);
+    echo "Error:" . $querySec . "<br>" . mysqli_error($connect);
+  }
+  if (mysqli_query($connect, $query)) {
+    echo "User deleted successfully";
+  }
+  else {
+    echo "Error:" . $query . "<br>" . mysqli_error($connect);
+    echo "Error:" . $query2 . "<br>" . mysqli_error($connect);
+  }
+}
+
+else {
+    $query = "SELECT * FROM `Users` AS `U`, `HasAccessTo` AS `H`, `Device2` AS `D` WHERE `SSN`=`UserSSN` AND `D`.`Manufacturer`=`H`.`Manufacturer` AND `D`.`DeviceName`=`H`.`DeviceName`";
     $search_result = filterTable($query);
 }
 
@@ -165,132 +141,129 @@ function filterTable($query)
   <h2><center><a href="http://localhost/ProjectHTML.html">Back</a></center></h2>
 
 
-  <center><form action="SelectUsers.php" method="post">
-    <input type="text" name="valueToSearch" placeholder="User First Name"><br><br>
-    <input type="submit" name="search" value="Filter"><br><br>
+<center>
+<table>
+  <tr>
+    <td>
+      <form action="Users.php" method="post">
+      <center><b><u>Insert/Delete a User</u></b><br><br>
+      SSN: <input type="text" name="userSSNEdit" placeholder="XXX-XX-XXXX" required><br>
+      Name: <input type="text" name="fNameEdit" placeholder="First Name">
+            <input type="text" name="lNameEdit" placeholder="Last Name"><br>
+      Phone Number: <input type="text" name="pNumberEdit" placeholder="XXXXXXXXXX"><br>
+      User Role:<input type="radio" name="AuthUser" value="Auth" required>Authorized User
+                <input type="radio" name="AuthUser" value="Sec">Secondary User<br><br>
+      <input type="submit" name="insertUser" value="Insert">
+      <input type="submit" name="deleteUser" value="Delete">
+      </center>
+      </form>
+    </td>
 
-    <table>
+    <td>
+    <center>
+      <center><b><u>Search for a User</u></b><br><br>
+      <form action="Users.php" method="post">
+        Search User:<input type="text" name="userSSN" placeholder="XXX-XX-XXXX" required>
+        <input type="submit" name="searchSSN" value="Search"><br>
+      </form>
+
+      <form action="Users.php" method="post">
+        <input type="text" name="deviceName" placeholder="Device Name" required>
+        <input type="submit" name="searchDeviceName" value="Filter"><br>
+      </form>
+
+      <form action="Users.php" method="post">
+        <select type="text" name="functionalityToSearch" required>
+          <option value="Thermostat">Thermostat</option>
+          <option value="Internet Access">Internet Access</option>
+          <option value="Phone">Phone</option>
+          <option value="Camera">Camera</option>
+          <option value="Watch">Watch</option>
+          <option value="Activity Tracker">Activity Tracker</option>
+          <option value="Refrigerator">Refrigerator</option>
+          <option value="Computer">Computer</option>
+        <input type="submit" name="searchFunctionality" value="Filter"><br>
+      </form>
+    </center>
+  </td>
+</tr>
+</table>
+
+<!-- If a SSN is imputted this sequence displays the results -->
+<?php if(isset($_POST['searchSSN']))
+{
+  echo"
+    <center><table>
       <tr>
         <th>First Name</th>
-        <th>Middle Initial</th>
         <th>Last Name</th>
-        <th>SSN</th>
         <th>Phone Number</th>
         <th>Date of Birth</th>
         <th>Address</th>
         <th>State</th>
         <th>Sex</th>
-      </tr>
+      </tr>";
+}
+?>
 
       <!-- populate table from mysql database -->
-<?php if(isset($_POST['search'])) while($row = mysqli_fetch_array($search_result)):?>
+<?php if(isset($_POST['searchSSN'])) while($row = mysqli_fetch_array($search_result)):?>
       <tr>
         <td><?php echo $row['Fname'];?></td>
-        <td><?php echo $row['Minit'];?></td>
         <td><?php echo $row['Lname'];?></td>
-        <td><?php echo $row['SSN'];?></td>
         <td><?php echo $row['PhoneNumber'];?></td>
         <td><?php echo $row['DateOfBirth'];?></td>
         <td><?php echo $row['Address'];?></td>
         <td><?php echo $row['State'];?></td>
         <td><?php echo $row['Sex'];?></td>
       </tr>
-<?php endwhile;?>
-    </table>
-  </form></center>
+<?php endwhile;
+    echo"</table></center>";?>
 
-</body>
-</html>
-
-<?php
-
-if(isset($_POST['search']))
+<!-- If a Device Name is imputted this sequence displays the results -->
+<?php if(isset($_POST['searchDeviceName']))
 {
-    $valueToSearch = $_POST['valueToSearch'];
-    // search in all table columns
-    // using concat mysql function
-    $query = "SELECT * FROM `Users` AS `U`, `HasAccessTo` AS `H`, `Device2` AS `D` WHERE `SSN`=`UserSSN` AND `D`.`Manufacturer`=`H`.`Manufacturer` AND `D`.`DeviceName`=`H`.`DeviceName` AND `D`.`DeviceName`='$valueToSearch'";
-    $search_result = filterTable1($query);
-}
-
-else if(isset($_POST['search2']))
-{
-    $functionalityToSearch = $_POST['functionalityToSearch'];
-    $query = "SELECT * FROM `Users` AS `U`, `HasAccessTo` AS `H`, `Device2` AS `D` WHERE `SSN`=`UserSSN` AND `D`.`Manufacturer`=`H`.`Manufacturer` AND `D`.`DeviceName`=`H`.`DeviceName` AND `D`.`Functionality`='$functionalityToSearch'";
-    $search_result = filterTable1($query);
-}
-
-else {
-    $query = "SELECT * FROM `Users` AS `U`, `HasAccessTo` AS `H`, `Device2` AS `D` WHERE `SSN`=`UserSSN` AND `D`.`Manufacturer`=`H`.`Manufacturer` AND `D`.`DeviceName`=`H`.`DeviceName`";
-    $search_result = filterTable1($query);
-}
-
-// function to connect and execute the query
-function filterTable1($query)
-{
-    $connect = mysqli_connect(`Localhost`, 'root', `Project`);
-    mysqli_select_db($connect, "Project");
-    $filter_Result = mysqli_query($connect, $query);
-    return $filter_Result;
-}
-
-?>
-
-<html>
-<head>
-  <link href="https://fonts.googleapis.com/css?family=Sedgwick+Ave" rel="stylesheet">
-  <style>
-    table, th, td {
-      border: 1px solid black;
-      border-collapse: collapse;
-    }
-    th, td {
-      padding: 15px;
-    }
-    h1{
-      font-family: 'Sedgwick Ave', cursive;
-    }
-    h2{
-      font-family: 'Sedgwick Ave', cursive;
-    }
-  </style>
-</head>
-<body>
-
-  <h1><center>A DATABASE FOR YOUR INTERNET OF THINGS:</center></h1>
-  <center><img src="http://localhost/ElitaDrawing.jpeg" /></center>
-  <h2><center>HELPING YOU SEE BOTH THE FOREST AND THE TREES</center></h2>
-  <h2><center><a href="http://localhost/ProjectHTML.html">Back</a></center></h2>
-
-
-  <form action="UserQueries.php" method="post">
-    <input type="text" name="valueToSearch" placeholder="Device Name">
-    <input type="submit" name="search" value="Filter"><br><br>
-  </form>
-  <form action="UserQueries.php" method="post">
-  <select type="text" name="functionalityToSearch">
-    <option value="">ALL</option>
-    <option value="Thermostat">Thermostat</option>
-    <option value="Internet Access">Internet Access</option>
-    <option value="Phone">Phone</option>
-    <option value="Camera">Camera</option>
-    <option value="Watch">Watch</option>
-    <option value="Activity Tracker">Activity Tracker</option>
-    <option value="Refrigerator">Refrigerator</option>
-    <option value="Computer">Computer</option>
-  <input type="submit" name="search2" value="Filter"><br><br>
-
-    <table>
+  echo"
+    <center><table>
       <tr>
         <th>First Name</th>
         <th>Last Name</th>
         <th>Phone Number</th>
         <th>Device Name</th>
         <th>Functionality</th>
-      </tr>
+        </tr>";
+}
+?>
 
-      <!-- populate table from mysql database -->
-<?php while($row = mysqli_fetch_array($search_result)):?>
+<!-- populate table from mysql database -->
+<?php if(isset($_POST['searchDeviceName'])) while($row = mysqli_fetch_array($search_result)):?>
+      <tr>
+          <td><?php echo $row['Fname'];?></td>
+          <td><?php echo $row['Lname'];?></td>
+          <td><?php echo $row['PhoneNumber'];?></td>
+          <td><?php echo $row['DeviceName'];?></td>
+          <td><?php echo $row['Functionality'];?></td>
+      </tr>
+<?php endwhile;
+  echo"</table></center>";?>
+
+<!-- If a Funcationality is imputted this sequence displays the results -->
+<?php if(isset($_POST['searchFunctionality']))
+{
+  echo"
+    <center><table>
+      <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Phone Number</th>
+        <th>Device Name</th>
+        <th>Functionality</th>
+      </tr>";
+}
+?>
+
+<!-- populate table from mysql database -->
+<?php if(isset($_POST['searchFunctionality'])) while($row = mysqli_fetch_array($search_result)):?>
       <tr>
         <td><?php echo $row['Fname'];?></td>
         <td><?php echo $row['Lname'];?></td>
@@ -298,8 +271,9 @@ function filterTable1($query)
         <td><?php echo $row['DeviceName'];?></td>
         <td><?php echo $row['Functionality'];?></td>
       </tr>
-<?php endwhile;?>
-    </table>
+<?php endwhile;
+  echo"</table></center>";?>
 
+</center>
 </body>
 </html>
