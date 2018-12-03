@@ -35,7 +35,7 @@ function filterTable($query)
 
 <html>
 <head>
-  <link href="https://fonts.googleapis.com/css?family=Sedgwick+Ave" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:100,100i&amp;subset=latin-ext" rel="stylesheet">
   <style>
     table, th, td {
       border: 1px solid black;
@@ -45,11 +45,11 @@ function filterTable($query)
       padding: 15px;
     }
     h1{
-      font-family: 'Sedgwick Ave', cursive;
-    }
-    h2{
-      font-family: 'Sedgwick Ave', cursive;
-    }
+    font-family: 'IBM Plex Sans', sans-serif;
+  }
+  h2{
+    font-family: 'IBM Plex Sans', sans-serif;
+  }
   </style>
 </head>
 <body>
@@ -57,14 +57,10 @@ function filterTable($query)
   <h1><center>A DATABASE FOR YOUR INTERNET OF THINGS:</center></h1>
   <center><img src="http://localhost/ElitaDrawing.jpeg" /></center>
   <h2><center>HELPING YOU SEE BOTH THE FOREST AND THE TREES</center></h2>
-  <h2><center><a href="http://localhost/WebInterface.html">Back</a></center></h2>
+  <h2><center><a href="http://localhost/ProjectHTML.html">Back</a></center></h2>
 
 
   <center>
-    <table>
-      <tr>
-        <td>
-          <center>
     <form action="SearchPackage.php" method="post">
       <input type="text" name="ssn" placeholder="SSN (XXX-XX-XXXX)">
       <input type="submit" name="searchSSN" value="Search">
@@ -77,11 +73,34 @@ function filterTable($query)
     <form action="SearchPackage.php" method="post">
       <input type="submit" name="showAll" value="Show All">
     </form>
-  </center>
-  </td>
-</tr>
-</table>
-</center>
+
+
+<head> 
+<style type="text/css">
+table{
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 20px;
+}
+body{
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 20px;
+}
+input[type='text']
+{font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 20px;
+}
+
+input[type='submit']
+{font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 15px;
+}
+
+input[type='button']
+{font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 15px;
+}
+</style>
+</head>
 
 <?php if(isset($_POST['searchSSN']))
 { echo"
